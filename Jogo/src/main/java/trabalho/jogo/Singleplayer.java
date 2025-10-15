@@ -2,8 +2,8 @@ package trabalho.jogo;
 
 public class Singleplayer {
     private Tabuleiro tabuleiro;
-    private Jogador player;
-    private Jogador computador;
+    private Personagem[] player;
+    private Personagem[] computador;
     private int primeiroJogador;
 
     public Singleplayer(int primeiroJogador) {

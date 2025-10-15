@@ -4,13 +4,13 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Jogo {
-    private int modoDeJogo;
+    private char modoDeJogo;
 
     public void menuDeInicio() {
-        System.out.println("Seja bem-vindo à Batalha Tática das Casas de Westeros!");
-        System.out.println("Selecione uma opção:\n");
-        System.out.println("(1) Solo(contra computador)");
-        System.out.println("(2) Duelo(2 jogadores)");
+        System.out.println("Seja bem-vindo a Batalha Tatica das Casas de Westeros!");
+        System.out.println("Selecione uma opcao:\n");
+        System.out.println("(1) Solo (contra computador)");
+        System.out.println("(2) Duelo (2 jogadores)");
         System.out.println("(Outro) Sair");
     }
     
@@ -18,16 +18,14 @@ public class Jogo {
         Scanner teclado = new Scanner(System.in);
         menuDeInicio();
         
-        this.modoDeJogo = teclado.nextInt();
-            
-        int quemComeca = coinFlip();
+        this.modoDeJogo = teclado.next().charAt(0);
         
-        if(this.modoDeJogo == 1) {
-            Singleplayer solo = new Singleplayer(quemComeca);
+        if(this.modoDeJogo == '1') {
+            Singleplayer solo = new Singleplayer(coinFlip());
             solo.inicio();
         }
-        else if(this.modoDeJogo == 2) {
-            Duelo duelo = new Duelo(quemComeca);
+        else if(this.modoDeJogo == '2') {
+            Duelo duelo = new Duelo(coinFlip());
             duelo.inicio();
         }
         else {
@@ -38,17 +36,17 @@ public class Jogo {
 
     public int coinFlip() {
         Random random = new Random();
-        int flip = random.nextInt() % 2;
+        int flip = random.nextInt(2);
         
         if(flip == 0) {
-            System.out.println("O player 1 começa!");
+            System.out.println("O player 1 comeca!");
             return 1;
         }
         else {
             if(this.modoDeJogo == 1)
-                System.out.println("O bot começa!");
+                System.out.println("O bot comeca!");
             else
-                System.out.println("O player 2 começa!");
+                System.out.println("O player 2 comeca!");
             return 2;
         }
     }

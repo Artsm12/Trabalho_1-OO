@@ -1,26 +1,26 @@
 package trabalho.jogo;
 
 import java.util.Random;
-import java.util.Scanner;
+import java.util.Scanner;  
 import java.util.Set;
 
 public class Duelo {
     private Tabuleiro tabuleiro;
-    private Jogador player1;
-    private Jogador player2;
+    private Personagem[] player1;
+    private Personagem[] player2;
     private final int primeiroJogador;
     private boolean acabou;
 
     public Duelo(int primeiroJogador) {
+        this.player1 = new Personagem[3];
+        this.player2 = new Personagem[3];
         this.primeiroJogador = primeiroJogador;
         this.acabou = false;
     }
         
     public void inicio() {
         this.tabuleiro = new Tabuleiro();
-        this.player1 = new Jogador();
-        this.player2 = new Jogador();
-        
+          
         posicionaPersonagens();
       
         tabuleiro.desenhaTabuleiro();
@@ -43,7 +43,8 @@ public class Duelo {
         Random random = new Random();
         int x = random.nextInt(10);
         int y = random.nextInt(10);
-        player1.stark = new Stark(y, x);
+        
+        player1[1] = new Personagem('S', y, x);
         this.tabuleiro.setCasa(y, x, 1);
         
     }
