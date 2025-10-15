@@ -36,7 +36,7 @@ public class Jogo {
         this.tabuleiro = new Tabuleiro();
         
         Computador computador = new Computador();
-        Jogador jogador = new Jogador();
+        Personagem jogador = new Personagem();
         
         this.tabuleiro.desenhaTabuleiro();
         
@@ -46,8 +46,8 @@ public class Jogo {
     public void iniciaDuelo() {
         this.tabuleiro = new Tabuleiro();
         
-        Jogador player_1 = new Jogador();
-        Jogador player_2 = new Jogador();
+        Personagem player_1 = new Personagem();
+        Personagem player_2 = new Personagem();
         
         this.tabuleiro.desenhaTabuleiro();
     }
