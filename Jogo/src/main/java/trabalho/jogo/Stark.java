@@ -1,7 +1,7 @@
 package trabalho.jogo;
 
 public class Stark {
-    public final char simbolo = 'S';
+    public static final char simbolo = 'S';
     private int posicaoX;
     private int posicaoY;
     private int vidaMax = 60;

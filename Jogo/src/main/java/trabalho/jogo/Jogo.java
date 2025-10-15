@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Jogo {
-    private Tabuleiro tabuleiro;
     private int modoDeJogo;
 
     public void menuDeInicio() {
@@ -21,37 +20,22 @@ public class Jogo {
         
         this.modoDeJogo = teclado.nextInt();
             
-        if(this.modoDeJogo == 1) 
-            iniciaJogoSolo();
-        else if(this.modoDeJogo == 2)
-            iniciaDuelo();
+        int quemComeca = coinFlip();
+        
+        if(this.modoDeJogo == 1) {
+            Singleplayer solo = new Singleplayer(quemComeca);
+            solo.inicio();
+        }
+        else if(this.modoDeJogo == 2) {
+            Duelo duelo = new Duelo(quemComeca);
+            duelo.inicio();
+        }
         else {
             System.out.println("Obrigado por jogar :)");
             System.exit(0);
         }
     }
-    
-    public void iniciaJogoSolo() {
-        Random random = new Random();
-        this.tabuleiro = new Tabuleiro();
-        
-        Computador computador = new Computador();
-        Jogador jogador = new Jogador();
-        
-        this.tabuleiro.desenhaTabuleiro();
-        
-        
-    }
-    
-    public void iniciaDuelo() {
-        this.tabuleiro = new Tabuleiro();
-        
-        Jogador player_1 = new Jogador();
-        Jogador player_2 = new Jogador();
-        
-        this.tabuleiro.desenhaTabuleiro();
-    }
-    
+
     public int coinFlip() {
         Random random = new Random();
         int flip = random.nextInt() % 2;
@@ -67,9 +51,5 @@ public class Jogo {
                 System.out.println("O player 2 começa!");
             return 2;
         }
-    }
-    
-    public void posicionaPersonagem() {
-        
     }
 }

@@ -1,8 +1,11 @@
 trabalho\jogo\Jogo.class
+trabalho\jogo\Replay.class
 trabalho\jogo\Stark.class
 trabalho\jogo\Main.class
 trabalho\jogo\Tabuleiro.class
+trabalho\jogo\Singleplayer.class
 trabalho\jogo\Targaryen.class
 trabalho\jogo\Computador.class
 trabalho\jogo\Jogador.class
+trabalho\jogo\Duelo.class
 trabalho\jogo\Lannister.class
