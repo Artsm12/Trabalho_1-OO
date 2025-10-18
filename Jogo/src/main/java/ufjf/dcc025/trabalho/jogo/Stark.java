@@ -1,5 +1,4 @@
-
-package trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo;
 
 public class Stark {
     public static final char simbolo = 'S';

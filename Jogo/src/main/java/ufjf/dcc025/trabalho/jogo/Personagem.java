@@ -1,5 +1,4 @@
-
-package trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo;
 
 public class Personagem {
     private int hp, def, atk, range;

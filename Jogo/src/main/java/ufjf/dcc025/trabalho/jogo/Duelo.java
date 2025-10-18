@@ -1,4 +1,4 @@
-package trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo;
 
 import java.util.Random;
 import java.util.Scanner;  
