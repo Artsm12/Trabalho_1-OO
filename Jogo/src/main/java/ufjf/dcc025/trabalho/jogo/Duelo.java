@@ -10,6 +10,8 @@ public class Duelo {
     private Personagem[] player2;
     private final int primeiroJogador;
     private boolean acabou;
+    
+    private Scanner teclado = new Scanner(System.in);
 
     public Duelo(int primeiroJogador) {
         this.player1 = new Personagem[3];
@@ -41,20 +43,77 @@ public class Duelo {
     }
     
     public void posicionaPersonagens() {
-        Random random = new Random();
-        int x = random.nextInt(10);
-        int y = random.nextInt(10);
+        System.out.println("Jogador " + this.primeiroJogador + " selecione onde colocar seu perosnagem:");
+        int i = 0;
+        int j = 0;
+        this.tabuleiro.selecionaCasa(i, j);
+        this.tabuleiro.desenhaTabuleiro();
         
-        player1[0] = new Personagem('S', 0, 9);
-        this.tabuleiro.setCasa(0, 9, 1);
+        String input;
+        imprimeMenuDeInput();
         
+        input = teclado.nextLine().toUpperCase();
         
-        player2[0] = new Personagem('L', 5, 7);
-        this.tabuleiro.setCasa(5, 7, 5); 
+        while(input != "E") {
+            switch(input) {
+                case "W" -> {
+                    i -= 1;
+                    this.tabuleiro.selecionaCasa(i, j);
+                    limpaTerminal();
+                    break;
+                }
+                case "A" -> {
+                    j -= 1;
+                    this.tabuleiro.selecionaCasa(i, j);
+                    limpaTerminal();
+
+                    break;
+                }
+                case "S" -> {
+                    i += 1;
+                    this.tabuleiro.selecionaCasa(i, j);
+                    limpaTerminal();
+
+                    break;
+                }
+                case "D" -> {
+                    j += 1;
+                    this.tabuleiro.selecionaCasa(i, j);
+                    limpaTerminal();
+                    break;
+                }
+                case "E" -> {
+                    break;
+                }
+                default -> {
+                    System.out.println("Por favor, insira um comando valido");
+                    imprimeMenuDeInput();
+                    break;
+                }
+            }
+            
+            limpaTerminal();
+            this.tabuleiro.desenhaTabuleiro();
+            imprimeMenuDeInput();
+            input = teclado.nextLine().toUpperCase();
+        }
+    }
+    
+    public void imprimeMenuDeInput() {
+        System.out.println("(W) Ir para cima");
+        System.out.println("(A) Ir para a esquerda");
+        System.out.println("(S) Ir para baixo");
+        System.out.println("(D) Ir para a direita");
+        System.out.println("(E) Confirma escolha");
     }
     
     public void turno(int j) {
         String input;
         
+    }
+    
+    public static void limpaTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

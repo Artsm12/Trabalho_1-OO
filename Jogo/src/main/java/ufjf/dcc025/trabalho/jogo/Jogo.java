@@ -16,6 +16,7 @@ public class Jogo {
     
     public void inicio() {
         Scanner teclado = new Scanner(System.in);
+        Duelo.limpaTerminal();
         menuDeInicio();
         
         this.modoDeJogo = teclado.next().charAt(0);
