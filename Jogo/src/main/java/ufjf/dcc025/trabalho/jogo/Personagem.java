@@ -5,7 +5,7 @@ public class Personagem {
     private char family;
     private int[] position = new int[2];
 
-    public Personagem(char family, int y , int x) {
+    public Personagem(int y , int x, char family) {
         this.family = family;
         setPosition(y, x);
         setFamily(this.family);

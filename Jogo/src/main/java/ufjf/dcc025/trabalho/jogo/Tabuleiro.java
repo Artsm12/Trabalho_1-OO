@@ -79,6 +79,8 @@ public class Tabuleiro {
             }
             if(i != 9)
                 System.out.println("-------------------------------------");
+            else
+                System.out.println("");
         }
     }
     
@@ -94,5 +96,9 @@ public class Tabuleiro {
         this.selecionada[0] = i;
         this.selecionada[1] = j;
         this.casas[i][j].seleciona();
-    }       
+    }     
+    
+    public boolean ehVazia(int i, int j) {
+        return this.casas[i][j].estaVazia();
+    }
 }

@@ -22,8 +22,8 @@ public class Casa {
         return valor;
     }
     
-    public void setValor(int val) {
-        this.valor = val;
+    public void setValor(int valor) {
+        this.valor = valor;
     }
     
     public char getFamily() {
@@ -44,5 +44,10 @@ public class Casa {
     
     public void removeSelecao() {
         this.selecionada = false;
+    }
+    
+    public void setCasa(int valor, char family) {
+        this.valor = valor;
+        this.family = family;
     }
 }
