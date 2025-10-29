@@ -329,6 +329,7 @@ public class Duelo {
     
     public int escolheBoneco(int jogador){
         int indice=0;
+        boolean valid = false;
         do{
             if(jogador == 1)
                 System.out.println("[1] " + player1[0].getNome() + "\n[2] "+ player1[1].getNome()+ "\n[3] "+ player1[2].getNome());
@@ -351,19 +352,18 @@ public class Duelo {
                 }
             }
             indice--;
+            valid = true;
         if(indice < 0 && indice > 2)
                 System.out.print("Escolha invalida!");
         else if(jogador == 1 && !player1[indice].isAlive()){
             System.out.println("Personagem incapacitado!");
-            indice = teclado.nextInt();
-            indice--;
+            valid = false;
         }
         else if(!player2[indice].isAlive()){
             System.out.println("Personagem incapacitado!");
-            indice = teclado.nextInt();
-            indice--;
+            valid = false;
         }
-        }while(indice < 0 && indice > 2);
+        }while(indice < 0 && indice > 2 || valid == false);
         return indice;
     
     }
@@ -541,10 +541,12 @@ public class Duelo {
         
         System.out.println("Equipe 1: ");
         for(int i=0; i<3; i++)
-            System.out.println(player1[i].getNome() + ": " +  player1[i].getHp() + " ");
+            System.out.print(player1[i].getNome() + ": " +  player1[i].getHp() + " | ");
+        System.out.println("");
         System.out.println("Equipe 2: ");
         for(int i=0; i<3; i++)
-            System.out.print(player2[i].getNome() + ": " +  player2[i].getHp() + " ");
+            System.out.print(player2[i].getNome() + ": " +  player2[i].getHp() + " | ");
+        System.out.println("");
     }
 
     private void atacar(Personagem player, Personagem[] enemy){
