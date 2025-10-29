@@ -557,19 +557,21 @@ public class Duelo {
                 j++;
             }
         do{
-            try {
-                // 3. Tenta ler um número inteiro
-                escolha = teclado.nextInt();
+            while(true){
+                try {
+                    // 3. Tenta ler um número inteiro
+                    escolha = teclado.nextInt();
                 
-                // 4. Se conseguiu ler, quebra o loop 
+                    // 4. Se conseguiu ler, quebra o loop 
+                    break;
+                } catch (InputMismatchException e) {
+                    // 5. Se deu erro (ex: digitou 'A' ou "olá")
+                    System.out.println("Erro: Entrada inválida. Você deve digitar um número inteiro.");
+                    System.out.println("Tente novamente.");
                 
-            } catch (InputMismatchException e) {
-                // 5. Se deu erro (ex: digitou 'A' ou "olá")
-                System.out.println("Erro: Entrada inválida. Você deve digitar um número inteiro.");
-                System.out.println("Tente novamente.");
-                
-                // 6. Limpa o buffer do scanner (IMPORTANTE!)
-                teclado.nextLine(); // Isso consome a entrada inválida que ficou "presa"
+                    // 6. Limpa o buffer do scanner (IMPORTANTE!)
+                    teclado.nextLine(); // Isso consome a entrada inválida que ficou "presa"
+                }
             }
             if(escolha < 0 && escolha > j)
                 System.out.print("Escolha uma opcao valida: ");

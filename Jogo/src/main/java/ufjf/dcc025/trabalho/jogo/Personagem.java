@@ -56,6 +56,7 @@ public class Personagem {
             return 0;
         return this.hp;
     }
+    
     private void setTargaryenAtributes() {    //define os status do personagem
         Targaryen stat = new Targaryen();
         this.hp = stat.TargaryenHp();
