@@ -13,13 +13,13 @@ public class Tabuleiro {
     //***************************************
 
     public Tabuleiro() {
-        this.casas = new Casa[10][10];
+        this.casas = new Casa[10][11];
         this.selecionada = new int[2];
         this.selecionada[0] = -1;
         this.selecionada[1] = -1;
         
         for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
+            for(int j = 0; j < 11; j++) {
                 casas[i][j] = new Casa();
             }
         }
@@ -87,6 +87,11 @@ public class Tabuleiro {
     public void setCasa(int i, int j, int jogador, char family) {
         this.casas[i][j].setFamily(family);
         this.casas[i][j].setValor(jogador);
+    }
+    
+    public void limpaCasa(int i, int j) {
+        this.casas[i][j].setFamily(' ');
+        this.casas[i][j].setValor(0);
     }
     
     public void selecionaCasa(int i, int j) {

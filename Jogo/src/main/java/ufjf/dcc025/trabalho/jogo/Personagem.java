@@ -51,7 +51,11 @@ public class Personagem {
     public char getFamily() {
         return this.family;
     }
-
+    public int getHp(){
+        if(this.hp < 0)
+            return 0;
+        return this.hp;
+    }
     private void setTargaryenAtributes() {    //define os status do personagem
         Targaryen stat = new Targaryen();
         this.hp = stat.TargaryenHp();
@@ -120,6 +124,35 @@ public class Personagem {
     }
 
     public void walk(String input) {    //personagem anda na direção escolhida
-
+        switch(input){
+                case "W": 
+                    this.position[0]--;
+                    break;
+                case "S": 
+                    this.position[0]++;
+                    break;
+                case "A": 
+                    this.position[1]--;
+                    break;
+                case "D": 
+                    this.position[1]++;
+                    break;
+                case "WD": 
+                    this.position[0]--; 
+                    this.position[1]++; 
+                    break;
+                case "WA": 
+                    this.position[0]--; 
+                    this.position[1]--; 
+                    break;
+                case "SA": 
+                    this.position[0]++; 
+                    this.position[1]--; 
+                    break;
+                case "SD": 
+                    this.position[0]++; 
+                    this.position[1]++; 
+                    break;
+            }
     }
 }
