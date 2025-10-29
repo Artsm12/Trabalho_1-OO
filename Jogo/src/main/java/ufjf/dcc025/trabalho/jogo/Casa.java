@@ -13,9 +13,7 @@ public class Casa {
     }
 
     public boolean estaVazia() {
-        if(this.valor == 0)
-            return true;
-        return false;
+        return this.valor == 0;
     }
     
     public int getValor() {

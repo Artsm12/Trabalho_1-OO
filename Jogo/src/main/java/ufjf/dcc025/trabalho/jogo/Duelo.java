@@ -23,19 +23,27 @@ public class Duelo {
 
     public void inicio() {
         this.tabuleiro = new Tabuleiro();
+        this.tabuleiro.desenhaTabuleiro();
 
-        for (int i = 0; i < 3; i++) {
-            if (this.primeiroJogador == 1) {
-                posicionaPersonagem(1, i);
-                posicionaPersonagem(2, i);
-            } else {
-                posicionaPersonagem(2, i);
-                posicionaPersonagem(1, i);
-            }
+        for(int i = 0; i < 3; i++) {
+            criaPersonagem(1, i);
+            limpaTerminal();
+            this.tabuleiro.desenhaTabuleiro();
+        }
+        
+        for(int i = 0; i < 3; i++) {
+            criaPersonagem(2, i);
+            limpaTerminal();
+            this.tabuleiro.desenhaTabuleiro();
         }
 
-        tabuleiro.desenhaTabuleiro();
         System.exit(0);
+
+        if (this.primeiroJogador == 1) {
+            System.out.println("O jogador 1 comeca!\n");
+        } else {
+            System.out.println("O jogador 2 comeca!\n");
+        }
 
         if (this.primeiroJogador == 1) {
             while (!acabou) {
@@ -50,7 +58,34 @@ public class Duelo {
         }
     }
 
-    public void posicionaPersonagem(int quemJoga, int indice) {
+    public void criaPersonagem(int jogador, int indice) {
+        Random random = new Random();
+        char family = selecaoDePersonagem(jogador);
+
+        int i, j;
+        do {
+            if (jogador == 1) {
+                i = random.nextInt(2);
+            } else {
+                i = random.nextInt(2) + 8;
+            }
+            j = random.nextInt(10);
+        } while (!this.tabuleiro.ehVazia(i, j));
+
+        System.out.println("\nEscolha um nome para seu personagem");
+        String nome = teclado.nextLine();
+
+        if (jogador == 1) {
+            player1[indice] = new Personagem(i, j, family, nome);
+            this.tabuleiro.setCasa(i, j, jogador, family);
+        } else {
+            player2[indice] = new Personagem(i, j, family, nome);
+            this.tabuleiro.setCasa(i, j, jogador, family);
+        }
+    }
+
+    /*
+    public void criaPersonagem(int quemJoga, int indice) {
         System.out.println("Jogador " + quemJoga + " selecione onde colocar seu perosnagem:");
         int i = 0;
         int j = 0;
@@ -206,41 +241,55 @@ public class Duelo {
             input = teclado.nextLine().toUpperCase();
         }
     }
-
-    public void imprimeMenuDeInput() {
+     */
+    public void imprimeMenuDeMovimentacao(int jogador, int indice) {
+        if(jogador == 1) {
+            System.out.println(this.player1[indice].getNome() + " ******* " + this.player1[indice].getFamily());
+        }
+        else {
+            System.out.println(this.player2[indice].getNome() + " ******* " + this.player2[indice].getFamily());
+        }
         System.out.println("(W) Ir para cima       | (WA) Diagonal para cima e esquerda");
         System.out.println("(A) Ir para a esquerda | (WD) Diagonal para cima e direita");
         System.out.println("(S) Ir para baixo      | (SA) Diagonal para baixo e esquerda");
         System.out.println("(D) Ir para a direita  | (SD) Diagonal para baixo e direita");
-        System.out.println("(E) Confirma escolha   |");
+        System.out.println("(C) Proximo personagem | (E) Confirmar escolha");
     }
 
-    public char selecaoDePersonagem() {
-        imprimeSelecaoDePersonagem();
+    public char selecaoDePersonagem(int jogador) {
+        imprimeSelecaoDePersonagem(jogador);
         String input;
         input = teclado.nextLine().toUpperCase();
-        
+
         while (input != "S" || input != "L" || input != "T" || input != "C") {
             switch (input) {
-                case "S", "s" -> {return 'S';}
-                case "L", "l" -> {return 'L';}
-                case "T", "t" -> {return 'T';}
-                case "C", "c" -> {return 'C';}
+                case "S" -> {
+                    return 'S';
+                }
+                case "L" -> {
+                    return 'L';
+                }
+                case "T" -> {
+                    return 'T';
+                }
+                case "C" -> {
+                    return 'C';
+                }
                 default -> {
                     System.out.println("Opcao invalida, insira um input valido");
-                    imprimeSelecaoDePersonagem();
+                    imprimeSelecaoDePersonagem(jogador);
                     break;
                 }
             }
-            
+
             input = teclado.nextLine().toUpperCase();
         }
-        
+
         return 'C';
     }
 
-    public void imprimeSelecaoDePersonagem() {
-        System.out.println("*********************************Escolha a familia do seu personagem*******************************************");
+    public void imprimeSelecaoDePersonagem(int jogador) {
+        System.out.println("**************************Jogador " + jogador + ", Escolha a familia do seu personagem*************************");
         System.out.println("**************Stark***************|***********Lannister************|*****************Targaryen*****************");
         System.out.println("* Vida maxima: 60                 | Vida maxima: 50                | Vida maxima: 45                          *");
         System.out.println("* Ataque base: 20                 | Ataque base: 20                | Ataque base: 20                          *");
@@ -251,15 +300,27 @@ public class Duelo {
         System.out.println("(S) Stark");
         System.out.println("(L) Lannister");
         System.out.println("(T) Targaryen");
-        System.out.println("(C) Cancelar");
     }
 
-    public void turno(int j) {
+    public void turno(int jogador) {
+        System.out.println("Jogador " + jogador + ", selecione um personagem para mover");
         String input;
+
+        limpaTerminal();
+        if (jogador == 1) {
+            this.tabuleiro.selecionaCasa(this.player1[0].getPosition());
+        } else {
+            this.tabuleiro.selecionaCasa(this.player2[0].getPosition());
+        }
+        this.tabuleiro.desenhaTabuleiro();
+        imprimeMenuDeMovimentacao(jogador, 0);
+        
+        input = teclado.nextLine().toUpperCase();
+
     }
 
     public static void limpaTerminal() {
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[2J\033[H");
         System.out.flush();
     }
 }

@@ -22,8 +22,8 @@ public class Jogo {
         this.modoDeJogo = teclado.next().charAt(0);
         
         if(this.modoDeJogo == '1') {
-            Singleplayer solo = new Singleplayer(coinFlip());
-            solo.inicio();
+            //Singleplayer solo = new Singleplayer(coinFlip());
+            //solo.inicio();
         }
         else if(this.modoDeJogo == '2') {
             Duelo duelo = new Duelo(coinFlip());
@@ -38,17 +38,7 @@ public class Jogo {
     public int coinFlip() {
         Random random = new Random();
         int flip = random.nextInt(2);
-        
-        if(flip == 0) {
-            System.out.println("O player 1 comeca!");
-            return 1;
-        }
-        else {
-            if(this.modoDeJogo == 1)
-                System.out.println("O bot comeca!");
-            else
-                System.out.println("O player 2 comeca!");
-            return 2;
-        }
+    
+        return flip+1;
     }
 }

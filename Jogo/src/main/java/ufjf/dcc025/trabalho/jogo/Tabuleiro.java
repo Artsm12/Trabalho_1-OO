@@ -96,7 +96,16 @@ public class Tabuleiro {
         this.selecionada[0] = i;
         this.selecionada[1] = j;
         this.casas[i][j].seleciona();
-    }     
+    }    
+    
+    public void selecionaCasa(int []v) {
+        if(selecionada[0] != -1 && selecionada[1] != -1)
+            this.casas[selecionada[0]][selecionada[1]].removeSelecao();
+        
+        this.selecionada[0] = v[0];
+        this.selecionada[1] = v[1];
+        this.casas[v[0]][v[1]].seleciona();
+    } 
     
     public boolean ehVazia(int i, int j) {
         return this.casas[i][j].estaVazia();
