@@ -119,7 +119,20 @@ public class Personagem {
         return 0;
     }
 
-    public void walk(String input) {    //personagem anda na direção escolhida
-
+   public void walk(String choice, int playerNumber){    //personagem anda na direção escolhida
+        if(playerNumber == 1){
+            switch(choice){
+                case "W" -> this.position[1]++;
+                case "S" -> this.position[1]--;
+                case "A" -> this.position[0]--;
+                case "D" -> this.position[0]++;
+            }
+        }
+        switch(choice){
+            case "W" -> this.position[1]--;
+            case "S" -> this.position[1]++;
+            case "A" -> this.position[0]++;
+            case "D" -> this.position[0]--;
+        }
     }
 }
