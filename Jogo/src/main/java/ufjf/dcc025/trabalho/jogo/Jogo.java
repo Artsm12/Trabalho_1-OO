@@ -22,9 +22,10 @@ public class Jogo {
         this.modoDeJogo = teclado.next().charAt(0);
         
         if(this.modoDeJogo == '1') {
-            //Singleplayer solo = new Singleplayer(coinFlip());
-            //solo.inicio();
+            Singleplayer solo = new Singleplayer(coinFlip());
+            solo.inicio();
         }
+        
         else if(this.modoDeJogo == '2') {
             Duelo duelo = new Duelo(coinFlip());
             duelo.inicio();
