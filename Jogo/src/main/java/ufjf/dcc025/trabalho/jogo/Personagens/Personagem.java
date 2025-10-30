@@ -1,17 +1,21 @@
-package ufjf.dcc025.trabalho.jogo;
+
+package ufjf.dcc025.trabalho.jogo.Personagens;
+
+import ufjf.dcc025.trabalho.jogo.Personagens.Lannister;
 
 public class Personagem {
 
     private String nome;
     private int hp, def, atk, range;
     private char family;
-    public int[] position = new int[2];
+    private int[] position = new int[2];
 
     public Personagem(int y, int x, char family, String nome) {
         this.nome = nome;
         this.family = family;
         setPosition(y, x);
         setFamily(this.family);
+        
     }
 
     public void setPosition(int y, int x) {
@@ -21,10 +25,6 @@ public class Personagem {
 
     public int[] getPosition() {
         return this.position;
-    }
-    
-    public int getRange(){
-        return this.range;
     }
 
     public void setFamily(char initial) {
@@ -161,3 +161,4 @@ public class Personagem {
             }
     }
 }
+

@@ -1,4 +1,4 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.TabuleiroUtils;
 
 public class Casa {
     

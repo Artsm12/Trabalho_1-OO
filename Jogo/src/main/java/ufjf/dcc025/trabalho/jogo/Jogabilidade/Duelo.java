@@ -1,17 +1,18 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.Jogabilidade;
+import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
+import ufjf.dcc025.trabalho.jogo.Personagens.Personagem;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.InputMismatchException;
 
 public class Duelo {
 
-    private Tabuleiro tabuleiro;
-    private Personagem[] player1;
-    private Personagem[] player2;
-    private final int primeiroJogador;
-    private boolean acabou;
+    protected Tabuleiro tabuleiro;
+    protected Personagem[] player1;
+    protected Personagem[] player2;
+    protected int primeiroJogador;
+    protected boolean acabou;
 
     private Scanner teclado = new Scanner(System.in);
 
@@ -40,14 +41,13 @@ public class Duelo {
         
         //System.exit(0);
 
+        limpaTerminal();
         if (this.primeiroJogador == 1) {
             System.out.println("O jogador 1 comeca!\n");
         } else {
             System.out.println("O jogador 2 comeca!\n");
         }
-        
-        
-        
+         
         if (this.primeiroJogador == 1) {
             while (!acabou) {
                 turno(1);
@@ -144,7 +144,7 @@ public class Duelo {
         System.out.println("(T) Targaryen");
     }
     
-    private void checaPersonagens(int jogador){
+    protected void checaPersonagens(int jogador){
         int [] pos;
         if(jogador == 1){
             for(int i=0; i<3; i++){
@@ -163,52 +163,136 @@ public class Duelo {
             }
         }
     }
-    private boolean checaTime(int jogador){
+    
+    protected boolean checaTime(int jogador){
         if(jogador == 1)
             return (!player1[0].isAlive() && !player1[1].isAlive() && !player1[2].isAlive());
         return (!player2[0].isAlive() && !player2[1].isAlive() && !player2[2].isAlive());
         
     }
     
-    public int escolheBoneco(int jogador){
-        int indice=0;
-        boolean valid = false;
-        do{
-            if(jogador == 1)
-                System.out.println("[1] " + player1[0].getNome() + "\n[2] "+ player1[1].getNome()+ "\n[3] "+ player1[2].getNome());
-            else
-                System.out.println("[1] " + player2[0].getNome() + "\n[2] "+ player2[1].getNome()+ "\n[3] "+ player2[2].getNome());
-            while(true){
-                try {
-                    // 3. Tenta ler um número inteiro
-                    indice = teclado.nextInt();
+    public int escolheBoneco(int jogador) {
+        int indice = 0;
+     
+        if(jogador == 1) {
+            this.tabuleiro.selecionaCasa(player1[indice].getPosition());
+        }
+        else {
+            this.tabuleiro.selecionaCasa(player2[indice].getPosition());
+        }
+        
+        this.tabuleiro.desenhaTabuleiro();
+        imprimeInformacoesDoPersonagem(jogador, indice);
+        System.out.println("(A) Personagem anterior | (D) Proximo personagem");
+        System.out.println("(E) Confirmar escolha");
+        
+        String input;
+        input = teclado.nextLine().toUpperCase();
+        limpaTerminal();
+        
+        while(true) {
+            switch(input) {
+                case "A" -> {
+                    if(indice - 1 < 0)
+                        indice = 2;
+                    else
+                        indice -= 1;
+                    
+                    if(jogador == 1) {
+                        do {
+                            if(indice - 1 < 0)
+                                indice = 2;
+                            else
+                                indice -= 1;
+                        }while(!player1[indice].isAlive());
+                        
+                        this.tabuleiro.selecionaCasa(player1[indice].getPosition());
+                        this.tabuleiro.desenhaTabuleiro();
+                        imprimeInformacoesDoPersonagem(1, indice);
+                    }
+                    else {
+                        do {
+                            if(indice - 1 < 0)
+                                indice = 2;
+                            else
+                                indice -= 1;
+                        }while(!player2[indice].isAlive());
+                        
+                        this.tabuleiro.selecionaCasa(player2[indice].getPosition());
+                        this.tabuleiro.desenhaTabuleiro();
+                        imprimeInformacoesDoPersonagem(1, indice);
+                    }
+                    System.out.println("(A) Personagem anterior | (D) Proximo personagem");
+                    System.out.println("(E) Confirmar escolha");
+                    input = teclado.nextLine().toUpperCase();
+                    limpaTerminal();
                     break;
-                    // 4. Se conseguiu ler, quebra o loop 
-                
-                } catch (InputMismatchException e) {
-                    // 5. Se deu erro (ex: digitou 'A' ou "olá")
-                    System.out.println("Erro: Entrada inválida. Você deve digitar um número inteiro.");
-                    System.out.println("Tente novamente.");
-                
-                    // 6. Limpa o buffer do scanner (IMPORTANTE!)
-                    teclado.nextLine(); // Isso consome a entrada inválida que ficou "presa"
+                }
+                case "D" -> {
+                    if(indice + 1 > 2)
+                        indice = 0;
+                    else
+                        indice += 1;
+                    
+                    if(jogador == 1) {
+                        do {
+                            if(indice + 1 > 2)
+                                indice = 2;
+                            else
+                                indice += 1;
+                        }while(!player1[indice].isAlive());
+                       
+                        this.tabuleiro.selecionaCasa(player1[indice].getPosition());
+                        this.tabuleiro.desenhaTabuleiro();
+                        imprimeInformacoesDoPersonagem(1, indice);
+                    }
+                    else {
+                        do {
+                            if(indice + 1 > 2)
+                                indice = 2;
+                            else
+                                indice += 1;
+                        }while(!player2[indice].isAlive());
+                        
+                        this.tabuleiro.selecionaCasa(player2[indice].getPosition());
+                        this.tabuleiro.desenhaTabuleiro();
+                        imprimeInformacoesDoPersonagem(2, indice);
+                    }
+                    System.out.println("(A) Personagem anterior | (D) Proximo personagem");
+                    System.out.println("(E) Confirmar escolha");
+                    input = teclado.nextLine().toUpperCase();
+                    limpaTerminal();
+                    break;
+                }
+                case "E" -> {
+                    limpaTerminal();
+                    return indice;
+                }
+                default -> {
+                    this.tabuleiro.desenhaTabuleiro();
+                    System.out.println("Input invalido");
+                    System.out.println("(A) Personagem anterior | (D) Proximo personagem");
+                    System.out.println("(E) Confirmar escolha");
+                    input = teclado.nextLine().toUpperCase();
+                    break;
                 }
             }
-            indice--;
-            valid = true;
-        if(indice < 0 && indice > 2)
-                System.out.print("Escolha invalida!");
-        else if(jogador == 1 && !player1[indice].isAlive()){
-            System.out.println("Personagem incapacitado!");
-            valid = false;
         }
-        else if(!player2[indice].isAlive()){
-            System.out.println("Personagem incapacitado!");
-            valid = false;
-        }
-        }while(indice < 0 && indice > 2 || valid == false);
-        return indice;
+    }
     
+    public void imprimeInformacoesDoPersonagem(int jogador, int indice) {
+        if(jogador == 1) {
+            System.out.println("Nome: " + player1[indice].getNome());
+            System.out.println("Indice: " + indice);
+            System.out.println("Familia: " + player1[indice].getFamily());
+            System.out.println("Hp: " + player1[indice].getHp());
+        }
+        else {
+            System.out.println("Nome: " + player2[indice].getNome());
+            System.out.println("Indice: " + indice);
+            System.out.println("Familia: " + player2[indice].getFamily());
+            System.out.println("Hp: " + player2[indice].getHp());
+        }
     }
     
     public void turno(int jogador) {
@@ -221,14 +305,12 @@ public class Duelo {
             acabou = true;
             return;
         }
-        this.tabuleiro.desenhaTabuleiro();
-        
-        System.out.println("Jogador " + jogador + ", selecione um personagem para mover");
+       
+        System.out.println("Jogador " + jogador + ", escolha um personagem para movimentar:\n");
         int indice = escolheBoneco(jogador);
         
         String input;
 
-        limpaTerminal();
         int pos[];
         if (jogador == 1) {
             this.tabuleiro.selecionaCasa(this.player1[indice].getPosition());
@@ -237,8 +319,10 @@ public class Duelo {
             this.tabuleiro.selecionaCasa(this.player2[indice].getPosition());
              pos = this.player2[indice].getPosition();
         }
+        printTeam();
         this.tabuleiro.desenhaTabuleiro();
         imprimeMenuDeMovimentacao(jogador, indice);
+        
         do{
             input = teclado.nextLine().toUpperCase();
             switch(input){
@@ -303,7 +387,7 @@ public class Duelo {
                         input = "X";
                     }
                 }
-                case "WD" -> {
+                case "WD", "DW" -> {
                     if(verificaSlot(pos[0]-1, pos[1]+1)){
                         if(jogador == 1)
                             player1[indice].walk("WD");
@@ -317,7 +401,7 @@ public class Duelo {
                         input = "X";
                     }
                 }
-                case "WA" -> {
+                case "WA", "AW" -> {
                     if(verificaSlot(pos[0]-1, pos[1]-1)){
                         if(jogador == 1)
                             player1[indice].walk("WA");
@@ -331,7 +415,7 @@ public class Duelo {
                         input = "X";
                     }
                 }
-                case "SA" -> {
+                case "SA", "AS" -> {
                     if(verificaSlot(pos[0]+1, pos[1]-1)){
                         if(jogador == 1)
                             player1[indice].walk("SA");
@@ -345,7 +429,7 @@ public class Duelo {
                         input = "X";
                     }
                 }
-                case "SD" -> {
+                case "SD", "DS" -> {
                     if(verificaSlot(pos[0]+1, pos[1]+1)){
                         if(jogador == 1)
                             player1[indice].walk("SD");
@@ -363,7 +447,7 @@ public class Duelo {
                     default -> input = "X";
                 }
             }while(input.equals("X"));
-        
+                
         for(int i=0; i<3; i++){
             pos = player1[i].getPosition();
             if(player1[i].isAlive())
@@ -374,39 +458,57 @@ public class Duelo {
             if(player2[i].isAlive())
                 this.tabuleiro.setCasa(pos[0], pos[1], 2, player2[i].getFamily());
         }
+        
+        printTeam();
         this.tabuleiro.desenhaTabuleiro();
+        
         int selec = 0;
-        boolean helloThere = false;
-        for(int i=0; i<3; i++){
-            helloThere = procura(player1[i], player2);
-            if(helloThere)
-                break;
-        }
-        if(helloThere){
-        System.out.println("Escolha o personagem que vai atacar: ");
-        selec = escolheBoneco(jogador);
+        
+        limpaTerminal();
+        
+        boolean temInimigo = false;
         if(jogador == 1)
-            atacar(player1[selec], player2);
-        else 
-            atacar(player2[selec], player1);
+            temInimigo = quemProcuraAcha(player1, player2);
+        else
+            temInimigo = quemProcuraAcha(player2, player1);
+        if(temInimigo){
+            System.out.println("Escolha o personagem que vai atacar: ");
+            selec = escolheBoneco(jogador);
+            if(jogador == 1)
+                atacar(player1[selec], player2);
+            else 
+                atacar(player2[selec], player1);
         }
+    }
+
+    private void printTeam(){
         System.out.println("Equipe 1: ");
-        for(int i=0; i<3; i++)
-            System.out.print(player1[i].getNome() + ": " +  player1[i].getHp() + " | ");
+        for (int i = 0; i < 3; i++) {
+            System.out.print(this.player1[i].getNome() + ": " + this.player1[i].getHp() + " | ");
+        }
         System.out.println("");
         System.out.println("Equipe 2: ");
-        for(int i=0; i<3; i++)
-            System.out.print(player2[i].getNome() + ": " +  player2[i].getHp() + " | ");
-        System.out.println("");
-    }
-    private boolean procura(Personagem player, Personagem[] enemy){
-        for(int i=0; i<3; i++)
-            if(player.searchEnemy(enemy[i]))
-                return true;
-        return false;
+        for (int i = 0; i < 3; i++) {
+            System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp() + " | ");
+        }
     }
     
-    private void atacar(Personagem player, Personagem[] enemy){
+    private boolean procuraInimigo(Personagem player, Personagem enemy[]){
+        return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
+    }
+
+    private boolean quemProcuraAcha(Personagem player[], Personagem enemy[]){
+        boolean temInimigo = false;
+        for(int i=0; i<3; i++){
+            if(procuraInimigo(player[i], enemy)){
+                temInimigo = true;
+                break;
+            }
+        }
+        return temInimigo;
+    }
+            
+    protected void atacar(Personagem player, Personagem[] enemy){
         System.out.println("Selecione o alvo: ");
         int escolha = 0, j=1;
         System.out.println("[0] Passar a vez");
@@ -420,6 +522,7 @@ public class Duelo {
                 try {
                     // 3. Tenta ler um número inteiro
                     escolha = teclado.nextInt();
+                    teclado.nextLine();
                 
                     // 4. Se conseguiu ler, quebra o loop 
                     break;
@@ -440,7 +543,8 @@ public class Duelo {
             player.attack(enemy[escolha-1]);
             
     }
-    private boolean verificaSlot(int i, int j){
+    
+    protected boolean verificaSlot(int i, int j){
         return (i>=0 && i<10 && j>=0 && j<10 && this.tabuleiro.ehVazia(i, j));
     }
     

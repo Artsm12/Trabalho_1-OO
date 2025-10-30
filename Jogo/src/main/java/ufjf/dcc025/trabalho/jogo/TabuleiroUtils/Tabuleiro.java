@@ -1,4 +1,4 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.TabuleiroUtils;
 
 public class Tabuleiro {
     
@@ -58,14 +58,14 @@ public class Tabuleiro {
             
             else if(this.casas[i][j].getValor() == 1) {
                 if(this.casas[i][j].selecionada())
-                    System.out.print(ANSI_YELLOW_BACKGROUND + ANSI_CYAN + this.casas[i][j].getFamily() + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW_BACKGROUND + ANSI_CYAN + this.casas[i][j].getFamily() + ANSI_RESET);
                 else
                     System.out.println(ANSI_CYAN + this.casas[i][j].getFamily() + ANSI_RESET);
             }
             
             else if(this.casas[i][j].getValor() == 2) {
                 if(this.casas[i][j].selecionada())
-                    System.out.print(ANSI_YELLOW_BACKGROUND + ANSI_RED + this.casas[i][j].getFamily() + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW_BACKGROUND + ANSI_RED + this.casas[i][j].getFamily() + ANSI_RESET);
                 else
                     System.out.println(ANSI_RED + this.casas[i][j].getFamily() + ANSI_RESET);
             }

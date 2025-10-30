@@ -1,4 +1,4 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.Jogabilidade;
 
 import java.util.Scanner;
 import java.util.Random;
@@ -20,6 +20,7 @@ public class Jogo {
         menuDeInicio();
         
         this.modoDeJogo = teclado.next().charAt(0);
+        Duelo.limpaTerminal();
         
         if(this.modoDeJogo == '1') {
             Singleplayer solo = new Singleplayer(coinFlip());
