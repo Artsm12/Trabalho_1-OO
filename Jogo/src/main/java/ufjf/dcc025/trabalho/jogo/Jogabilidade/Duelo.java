@@ -89,16 +89,35 @@ public class Duelo {
 
     public void imprimeMenuDeMovimentacao(int jogador, int indice) {
         if(jogador == 1) {
-            System.out.println(this.player1[indice].getNome() + " ******* " + this.player1[indice].getFamily());
+            System.out.print("Nome: " + this.player1[indice].getNome() + "  |  ");
+            
+            System.out.print("Familia: ");
+            if(player1[indice].getFamily() == 'S')
+                System.out.println("Stark");
+            else if(player1[indice].getFamily() == 'L')
+                System.out.println("Lannister");
+            else
+                System.out.println("Targaryen");
         }
         else {
-            System.out.println(this.player2[indice].getNome() + " ******* " + this.player2[indice].getFamily());
+            System.out.print(this.player2[indice].getNome() + "  |  " + this.player2[indice].getFamily());
+            
+            if(player2[indice].getFamily() == 'S')
+                System.out.println("Stark");
+            else if(player2[indice].getFamily() == 'L')
+                System.out.println("Lannister");
+            else
+                System.out.println("Targaryen");
         }
-        System.out.println("(W) Ir para cima       | (WA) Diagonal para cima e esquerda");
-        System.out.println("(A) Ir para a esquerda | (WD) Diagonal para cima e direita");
-        System.out.println("(S) Ir para baixo      | (SA) Diagonal para baixo e esquerda");
-        System.out.println("(D) Ir para a direita  | (SD) Diagonal para baixo e direita");
-        System.out.println("(C) Ficar");
+
+        
+        System.out.println("*--------------------------------------------------------------*");
+        System.out.println("| (W) Ir para cima       | (WA) Diagonal para cima e esquerda  |");
+        System.out.println("| (A) Ir para a esquerda | (WD) Diagonal para cima e direita   |");
+        System.out.println("| (S) Ir para baixo      | (SA) Diagonal para baixo e esquerda |");
+        System.out.println("| (D) Ir para a direita  | (SD) Diagonal para baixo e direita  |");
+        System.out.println("*--------------------------------------------------------------*");
+
     }
 
     public char selecaoDePersonagem(int jogador) {
@@ -131,17 +150,15 @@ public class Duelo {
     }
 
     public void imprimeSelecaoDePersonagem(int jogador) {
-        System.out.println("**************************Jogador " + jogador + ", Escolha a familia do seu personagem*************************");
-        System.out.println("**************Stark***************|***********Lannister************|*****************Targaryen*****************");
-        System.out.println("* Vida maxima: 60                 | Vida maxima: 50                | Vida maxima: 45                          *");
-        System.out.println("* Ataque base: 20                 | Ataque base: 20                | Ataque base: 20                          *");
-        System.out.println("* Defesa base: 10                 | Defesa base: 10                | Defesa base: 10                          *");
-        System.out.println("* Alcance: 1 (corpo-a-corpo)      | Alcance: 2                     | Alcance: 3                               *");
-        System.out.println("* Modificador ofensivo: nenhum    | Modificador ofensivo: +15% atk | Modificador ofensivo: ignora defesa base *");
-        System.out.println("***************************************************************************************************************");
-        System.out.println("(S) Stark");
-        System.out.println("(L) Lannister");
-        System.out.println("(T) Targaryen");
+        System.out.println("Jogador " + jogador + ", Escolha a familia do seu personagem\n");
+        System.out.println("*-------------Stark---------------------------Lanniste-------------------------------Targaryen----------------*");
+        System.out.println("| Vida maxima: 60                 | Vida maxima: 50                | Vida maxima: 45                          |");
+        System.out.println("| Ataque base: 20                 | Ataque base: 20                | Ataque base: 20                          |");
+        System.out.println("| Defesa base: 10                 | Defesa base: 10                | Defesa base: 10                          |");
+        System.out.println("| Alcance: 1 (corpo-a-corpo)      | Alcance: 2                     | Alcance: 3                               |");
+        System.out.println("| Modificador ofensivo: nenhum    | Modificador ofensivo: +15% atk | Modificador ofensivo: ignora defesa base |");
+        System.out.println("*-------------------------------------------------------------------------------------------------------------*");
+        System.out.println("(S) Stark  |  (L) Lannister  |  (T) Targaryen");
     }
     
     protected void checaPersonagens(int jogador){
@@ -171,7 +188,7 @@ public class Duelo {
         
     }
     
-    public int escolheBoneco(int jogador) {
+    public int escolhePersonagem(int jogador) {
         int indice = 0;
      
         if(jogador == 1) {
@@ -182,7 +199,11 @@ public class Duelo {
         }
         
         this.tabuleiro.desenhaTabuleiro();
-        imprimeInformacoesDoPersonagem(jogador, indice);
+        if(jogador == 1)
+            player1[indice].imprimeInformacoesDoPersonagem();
+        else
+            player2[indice].imprimeInformacoesDoPersonagem();
+        
         System.out.println("(A) Personagem anterior | (D) Proximo personagem");
         System.out.println("(E) Confirmar escolha");
         
@@ -208,7 +229,8 @@ public class Duelo {
                         
                         this.tabuleiro.selecionaCasa(player1[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
-                        imprimeInformacoesDoPersonagem(1, indice);
+                        
+                        player1[indice].imprimeInformacoesDoPersonagem();
                     }
                     else {
                         do {
@@ -220,7 +242,8 @@ public class Duelo {
                         
                         this.tabuleiro.selecionaCasa(player2[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
-                        imprimeInformacoesDoPersonagem(1, indice);
+                      
+                        player2[indice].imprimeInformacoesDoPersonagem();
                     }
                     System.out.println("(A) Personagem anterior | (D) Proximo personagem");
                     System.out.println("(E) Confirmar escolha");
@@ -244,7 +267,7 @@ public class Duelo {
                        
                         this.tabuleiro.selecionaCasa(player1[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
-                        imprimeInformacoesDoPersonagem(1, indice);
+                        player1[indice].imprimeInformacoesDoPersonagem();
                     }
                     else {
                         do {
@@ -256,7 +279,7 @@ public class Duelo {
                         
                         this.tabuleiro.selecionaCasa(player2[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
-                        imprimeInformacoesDoPersonagem(2, indice);
+                        player2[indice].imprimeInformacoesDoPersonagem();
                     }
                     System.out.println("(A) Personagem anterior | (D) Proximo personagem");
                     System.out.println("(E) Confirmar escolha");
@@ -280,20 +303,6 @@ public class Duelo {
         }
     }
     
-    public void imprimeInformacoesDoPersonagem(int jogador, int indice) {
-        if(jogador == 1) {
-            System.out.println("Nome: " + player1[indice].getNome());
-            System.out.println("Indice: " + indice);
-            System.out.println("Familia: " + player1[indice].getFamily());
-            System.out.println("Hp: " + player1[indice].getHp());
-        }
-        else {
-            System.out.println("Nome: " + player2[indice].getNome());
-            System.out.println("Indice: " + indice);
-            System.out.println("Familia: " + player2[indice].getFamily());
-            System.out.println("Hp: " + player2[indice].getHp());
-        }
-    }
     
     public void turno(int jogador) {
         checaPersonagens(jogador);
@@ -307,7 +316,7 @@ public class Duelo {
         }
        
         System.out.println("Jogador " + jogador + ", escolha um personagem para movimentar:\n");
-        int indice = escolheBoneco(jogador);
+        int indice = escolhePersonagem(jogador);
         
         String input;
 
@@ -319,9 +328,15 @@ public class Duelo {
             this.tabuleiro.selecionaCasa(this.player2[indice].getPosition());
              pos = this.player2[indice].getPosition();
         }
+
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
         imprimeMenuDeMovimentacao(jogador, indice);
+
+        
+        this.tabuleiro.desenhaTabuleiro();
+        imprimeMenuDeMovimentacao(jogador, 0);
+
         
         do{
             input = teclado.nextLine().toUpperCase();
@@ -458,13 +473,13 @@ public class Duelo {
             if(player2[i].isAlive())
                 this.tabuleiro.setCasa(pos[0], pos[1], 2, player2[i].getFamily());
         }
+
         
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
         
         int selec = 0;
         
-        limpaTerminal();
         
         boolean temInimigo = false;
         if(jogador == 1)
@@ -473,12 +488,14 @@ public class Duelo {
             temInimigo = quemProcuraAcha(player2, player1);
         if(temInimigo){
             System.out.println("Escolha o personagem que vai atacar: ");
-            selec = escolheBoneco(jogador);
+            selec = escolhePersonagem(jogador);
             if(jogador == 1)
                 atacar(player1[selec], player2);
             else 
                 atacar(player2[selec], player1);
         }
+        
+        limpaTerminal();
     }
 
     private void printTeam(){

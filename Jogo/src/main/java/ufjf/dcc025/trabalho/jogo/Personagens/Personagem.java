@@ -1,4 +1,3 @@
-
 package ufjf.dcc025.trabalho.jogo.Personagens;
 
 import ufjf.dcc025.trabalho.jogo.Personagens.Lannister;
@@ -159,6 +158,32 @@ public class Personagem {
                     this.position[1]++; 
                     break;
             }
+    }
+    
+    public void imprimeInformacoesDoPersonagem() {
+        System.out.print("Nome: " + this.nome + "  |  ");
+        
+        System.out.print("Familia: ");
+        if(this.family == 'S')
+            System.out.println("Stark");
+        else if(this.family == 'L')
+            System.out.println("Lannister");
+        else
+            System.out.println("Targaryen");
+        
+        System.out.println("*------------------------------------------------*");
+        System.out.println("| HP: " + this.hp + "                                         |");
+        System.out.println("| ATK: " + this.atk + "                                        |");
+        System.out.println("| DEF: " + this.def + "                                        |");
+        
+        if(this.family == 'S')
+            System.out.println("| Modificador: leva 20% menos dano               |");
+        else if(this.family == 'L')
+            System.out.println("| Modificador: causa 15% dano a mais             |");
+        else
+            System.out.println("| Modificador: ignora a defesa base dos inimigos |");
+        
+        System.out.println("*------------------------------------------------*");
     }
 }
 

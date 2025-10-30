@@ -29,8 +29,8 @@ public class Singleplayer extends Duelo {
             criaPersonagemBot(i);
             limpaTerminal();
         }
-        this.tabuleiro.desenhaTabuleiro();
 
+        limpaTerminal();
         //System.exit(0);
         if (this.primeiroJogador == 1) {
             System.out.println("O jogador 1 comeca!\n");
@@ -108,7 +108,6 @@ public class Singleplayer extends Duelo {
             acabou = true;
             return;
         }
-        this.tabuleiro.desenhaTabuleiro();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -182,21 +181,24 @@ public class Singleplayer extends Duelo {
             acabou = true;
             return;
         }
+
         
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
 
-        System.out.println("Jogador, selecione um personagem para mover");
-        int indice = escolheBoneco(1);
+
+        int indice = escolhePersonagem(1);
 
         String input;
-
-        limpaTerminal();
+        
         int pos[];
         this.tabuleiro.selecionaCasa(this.player1[indice].getPosition());
         pos = this.player1[indice].getPosition();
 
+        limpaTerminal();
         this.tabuleiro.desenhaTabuleiro();
+        System.out.println("Jogador, selecione um personagem para mover\n");
+        
         imprimeMenuDeMovimentacao(1, 0);
         do {
             input = teclado.nextLine().toUpperCase();
@@ -306,6 +308,7 @@ public class Singleplayer extends Duelo {
         }
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
+
         
         boolean temInimigo = false;
         for(int i=0; i<3; i++){
@@ -318,9 +321,11 @@ public class Singleplayer extends Duelo {
         
         if(temInimigo){
             System.out.println("Escolha o personagem que vai atacar: ");
-            selec = escolheBoneco(1);
+            selec = escolhePersonagem(1);
             atacar(player1[selec], player2);
         }
         System.out.println("");
+        limpaTerminal();
     }
+    
 }
