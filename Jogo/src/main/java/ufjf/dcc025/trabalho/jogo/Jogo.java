@@ -20,6 +20,7 @@ public class Jogo {
         menuDeInicio();
         
         this.modoDeJogo = teclado.next().charAt(0);
+        Duelo.limpaTerminal();
         
         if(this.modoDeJogo == '1') {
             Singleplayer solo = new Singleplayer(coinFlip());
