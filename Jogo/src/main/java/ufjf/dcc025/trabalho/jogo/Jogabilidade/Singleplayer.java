@@ -100,7 +100,7 @@ public class Singleplayer extends Duelo {
         }
     }
     
-    public void turnoBot() {
+     public void turnoBot() {
         checaPersonagens(2);
         if (checaTime(1)) {
             acabou = true;
@@ -306,8 +306,10 @@ public class Singleplayer extends Duelo {
 
         if (temInimigo) {
             System.out.println("Escolha o personagem que vai atacar: ");
-            selec = escolhePersonagem(1);
-            atacar(player1[selec], player2);
+            do{
+                selec = escolhePersonagem(1);
+                
+            }while(atacar(player1[selec], player2)==1);
         }
         System.out.println("");
         Tabuleiro.limpaTerminal();

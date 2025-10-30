@@ -233,7 +233,11 @@ public class Duelo extends Jogo{
     }
 
     public int escolhePersonagem(int jogador) {
-        int indice = 0;
+        int indice;
+        if(jogador == 1) 
+            for(indice = 0; !player1[indice].isAlive(); indice++);
+        else
+            for(indice = 0; !player2[indice].isAlive(); indice++);
 
         if (jogador == 1) {
             this.tabuleiro.selecionaCasa(player1[indice].getPosition());
@@ -258,12 +262,6 @@ public class Duelo extends Jogo{
         while (true) {
             switch (input) {
                 case "A" -> {
-                    if (indice - 1 < 0) {
-                        indice = 2;
-                    } else {
-                        indice -= 1;
-                    }
-
                     if (jogador == 1) {
                         do {
                             if (indice - 1 < 0) {
@@ -280,11 +278,12 @@ public class Duelo extends Jogo{
                         this.tabuleiro.desenhaTabuleiro();
 
                         player1[indice].imprimeInformacoesDoPersonagem();
-                    } else {
+                    } 
+                    else {
                         do {
                             if (indice - 1 < 0) {
                                 indice = 2;
-                                while(!player1[indice].isAlive())
+                                while(!player2[indice].isAlive())
                                     indice--;
                             } else {
                                 indice -= 1;
@@ -304,14 +303,6 @@ public class Duelo extends Jogo{
                     break;
                 }
                 case "D" -> {
-                    if (indice + 1 > 2) {
-                        indice = 0;
-                        while(!player1[indice].isAlive())
-                                    indice++;
-                    } else {
-                        indice += 1;
-                    }
-
                     if (jogador == 1) {
                         do {
                             if (indice + 1 > 2) {
@@ -325,11 +316,12 @@ public class Duelo extends Jogo{
                         Tabuleiro.limpaTerminal();
                         this.tabuleiro.desenhaTabuleiro();
                         player1[indice].imprimeInformacoesDoPersonagem();
-                    } else {
+                    } 
+                    else {
                         do {
                             if (indice + 1 > 2) {
                                 indice = 0;
-                                while(!player1[indice].isAlive())
+                                while(!player2[indice].isAlive())
                                     indice++;
                             } else {
                                 indice += 1;
@@ -554,11 +546,17 @@ public class Duelo extends Jogo{
         if (temInimigo) {
             Tabuleiro.limpaTerminal();
             System.out.println("Escolha o personagem que vai atacar: \n");
-            selec = escolhePersonagem(jogador);
+            
             if (jogador == 1) {
-                atacar(player1[selec], player2);
+                do{
+                selec = escolhePersonagem(jogador);
+                
+                }while(atacar(player1[selec], player2)==1);
             } else {
-                atacar(player2[selec], player1);
+                do{
+                selec = escolhePersonagem(jogador);
+                
+                }while(atacar(player2[selec], player1)==1);
             }
         }
 
@@ -593,7 +591,9 @@ public class Duelo extends Jogo{
         return temInimigo;
     }
 
-    protected void atacar(Personagem player, Personagem[] enemy) {
+    protected int atacar(Personagem player, Personagem[] enemy) {
+        if(!procuraInimigoAux(player, enemy))
+            return 1;
         System.out.println("Selecione o alvo: ");
         int escolha = 0, j = 1;
         System.out.println("[0] Passar a vez");
@@ -629,10 +629,11 @@ public class Duelo extends Jogo{
         if (escolha > 0) {
             int hpAntiga = enemy[escolha - 1].getHp();
             player.attack(enemy[escolha - 1]);
-            this.replay.salvaEstadoDoJogo(this.tabuleiro, player, enemy[escolha], hpAntiga - enemy[escolha - 1].getHp());
+            this.replay.salvaEstadoDoJogo(this.tabuleiro, player, enemy[escolha-1], hpAntiga - enemy[escolha - 1].getHp());
         } else {
             this.replay.salvaEstadoDoJogo(this.tabuleiro, player);
         }
+        return 0;
     }
 
     protected boolean verificaSlot(int i, int j) {
