@@ -582,7 +582,7 @@ public class Duelo extends Jogo{
         return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
     }
 
-    private boolean procuraInimigo(Personagem player[], Personagem enemy[]) {
+    protected boolean procuraInimigo(Personagem player[], Personagem enemy[]) {
         boolean temInimigo = false;
         for (int i = 0; i < 3; i++) {
             if (procuraInimigoAux(player[i], enemy)) {

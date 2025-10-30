@@ -163,10 +163,6 @@ public class Singleplayer extends Duelo {
         }
     }
 
-    private boolean procuraInimigo(Personagem player, Personagem enemy[]) {
-        return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
-    }
-
     public void turnoPlayer() {
         checaPersonagens(1);
         if (checaTime(1)) {
@@ -304,13 +300,8 @@ public class Singleplayer extends Duelo {
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
 
-        boolean temInimigo = false;
-        for (int i = 0; i < 3; i++) {
-            if (procuraInimigo(player1[i], player2)) {
-                temInimigo = true;
-                break;
-            }
-        }
+        boolean temInimigo = (procuraInimigo(player1, player2));
+            
         int selec = 0;
 
         if (temInimigo) {
