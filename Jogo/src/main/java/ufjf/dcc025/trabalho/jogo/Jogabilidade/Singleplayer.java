@@ -176,7 +176,7 @@ public class Singleplayer extends Duelo {
 
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
-        System.out.println("Jogador, selecione um personagem\n");
+        System.out.println("Jogador, selecione um personagem para se movimentar\n");
         int indice = escolhePersonagem(1);
 
         String input;
