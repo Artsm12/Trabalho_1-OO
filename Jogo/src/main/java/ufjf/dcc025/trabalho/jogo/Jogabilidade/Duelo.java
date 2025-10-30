@@ -61,7 +61,7 @@ public class Duelo extends Jogo{
                 turno(1);
             }
         }
-
+        
     }
 
     public void menuDeFimDeJogo() {
@@ -555,7 +555,6 @@ public class Duelo extends Jogo{
             } else {
                 do{
                 selec = escolhePersonagem(jogador);
-                
                 }while(atacar(player2[selec], player1)==1);
             }
         }
@@ -583,7 +582,7 @@ public class Duelo extends Jogo{
     protected boolean procuraInimigo(Personagem player[], Personagem enemy[]) {
         boolean temInimigo = false;
         for (int i = 0; i < 3; i++) {
-            if (procuraInimigoAux(player[i], enemy)) {
+            if (procuraInimigoAux(player[i], enemy) && player[i].isAlive()) {
                 temInimigo = true;
                 break;
             }
