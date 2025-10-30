@@ -1,4 +1,5 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.SistemaDeReplay;
+import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
 
 import java.util.List;
 import java.util.ArrayList;

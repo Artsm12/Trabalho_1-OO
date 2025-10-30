@@ -1,4 +1,6 @@
-package ufjf.dcc025.trabalho.jogo;
+package ufjf.dcc025.trabalho.jogo.Personagens;
+
+import ufjf.dcc025.trabalho.jogo.Personagens.Lannister;
 
 public class Personagem {
 
