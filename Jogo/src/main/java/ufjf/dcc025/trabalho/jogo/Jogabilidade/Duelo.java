@@ -591,8 +591,9 @@ public class Duelo extends Jogo{
     }
 
     protected int atacar(Personagem player, Personagem[] enemy) {
-        if(!procuraInimigoAux(player, enemy))
-            return 1;
+        if(!procuraInimigoAux(player, enemy)){
+            System.out.println("Não haviam inimigos próximos, escolha outro personagem para atacar.");
+            return 1;}
         System.out.println("Selecione o alvo: ");
         int escolha = 0, j = 1;
         System.out.println("[0] Passar a vez");
