@@ -99,32 +99,7 @@ public class Singleplayer extends Duelo {
         this.tabuleiro.setCasa(i, j, 2, family);
         }
     }
-/*
-    public void criaPersonagemBot(int indice) {
-        Random random = new Random();
-        int famInd = random.nextInt(1, 4);
-        char family = 'S';
-        switch (famInd) {
-            case 1 ->
-                family = 'S';
-            case 2 ->
-                family = 'L';
-            case 3 ->
-                family = 'T';
-            default -> {
-            }
-        }
-        int i, j;
-        do {
-            i = random.nextInt(2) + 8;
-            j = random.nextInt(10);
-        } while (!this.tabuleiro.ehVazia(i, j));
-        String nome = "COM" + indice;
-
-        player2[indice] = new Personagem(i, j, family, nome);
-        this.tabuleiro.setCasa(i, j, 2, family);
-    }
-*/
+    
     public void turnoBot() {
         checaPersonagens(2);
         if (checaTime(1)) {

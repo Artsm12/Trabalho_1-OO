@@ -172,7 +172,7 @@ public class Personagem {
             System.out.println("Targaryen");
         
         System.out.println("*------------------------------------------------*");
-        System.out.println("| HP: " + this.hp + "                                         |");
+        System.out.println("| HP: " + this.getHp() + "                                         |");
         System.out.println("| ATK: " + this.atk + "                                        |");
         System.out.println("| DEF: " + this.def + "                                        |");
         

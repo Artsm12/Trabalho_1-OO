@@ -1,11 +1,13 @@
 package ufjf.dcc025.trabalho.jogo.Jogabilidade;
 import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
+import ufjf.dcc025.trabalho.jogo.SistemaDeReplay.Replay;
 
 import java.util.Scanner;
 import java.util.Random;
 
 public class Jogo {
     private int modoDeJogo;
+    protected Replay replay;
 
     public static void menuDeInicio() {
         System.out.println("Selecione uma opcao:\n");
