@@ -5,7 +5,7 @@ public class Personagem {
     private String nome;
     private int hp, def, atk, range;
     private char family;
-    private int[] position = new int[2];
+    public int[] position = new int[2];
 
     public Personagem(int y, int x, char family, String nome) {
         this.nome = nome;
@@ -21,6 +21,10 @@ public class Personagem {
 
     public int[] getPosition() {
         return this.position;
+    }
+    
+    public int getRange(){
+        return this.range;
     }
 
     public void setFamily(char initial) {
