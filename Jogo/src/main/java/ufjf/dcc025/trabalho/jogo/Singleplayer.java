@@ -48,14 +48,15 @@ public class Singleplayer{
         if (this.primeiroJogador == 1) {
             while (!acabou) {
                 turnoPlayer();
-                //turno(2);
+                turnoBot();
             }
         } else {
             while (!acabou) {
-                //turno(2);
+                turnoBot();
                 turnoPlayer();
             }
         }
+        System.out.println("Fim de jogo!");
     }
 
     public void criaPersonagem(int indice) {
@@ -109,6 +110,7 @@ public class Singleplayer{
         System.out.println("(A) Ir para a esquerda | (WD) Diagonal para cima e direita");
         System.out.println("(S) Ir para baixo      | (SA) Diagonal para baixo e esquerda");
         System.out.println("(D) Ir para a direita  | (SD) Diagonal para baixo e direita");
+        System.out.println("(C) Ficar");
     }
 
     public char selecaoDePersonagem(int jogador) {
@@ -158,7 +160,7 @@ public class Singleplayer{
         int [] pos;
         if(jogador == 1){
             for(int i=0; i<3; i++){
-                if(!player[i].isAlive()){
+                if(!(player[i].isAlive())){
                     pos = player[i].getPosition();
                     this.tabuleiro.limpaCasa(pos[0], pos[1]);
                 }
@@ -166,7 +168,7 @@ public class Singleplayer{
         }
         else{
             for(int i=0; i<3; i++){
-                if(!computador[i].isAlive()){
+                if(!(computador[i].isAlive())){
                     pos = computador[i].getPosition();
                     this.tabuleiro.limpaCasa(pos[0], pos[1]);
                 }
@@ -212,6 +214,66 @@ public class Singleplayer{
     
     }
     
+    /*private int mostNextOfEnemy(int ind){
+        int indiceBot = 0;
+        int dist2 = 0, dist1 = Math.abs(computador[0].position[0] - player[ind].position[0]); 
+        for(int i=0; i<3; i++){
+            dist2 = Math.abs(computador[i].position[0] - player[ind].position[0]);
+            if(dist2 < dist1){
+                inimigo = i;
+                dist1 = dist2;
+            }
+        }
+        return indiceBot;
+    }*/
+    
+    private void turnoBot(){
+        checaPersonagens(2);
+        if(checaTime(player)){
+            acabou = true;
+            return;
+        }
+        if(checaTime(computador)){
+            acabou = true;
+            return;
+        }
+        this.tabuleiro.desenhaTabuleiro();
+        
+        for(int i=0; i<3; i++)
+            for(int j=0; j<3; j++){
+                if(computador[i].searchEnemy(player[j]))
+                {
+                    computador[i].attack(player[j]);
+                    i=2;
+                    break;
+                }
+            }
+        Random random = new Random();
+        int indice = random.nextInt(0, 2);
+        int[] pos;
+        pos = computador[indice].getPosition();
+        if(verificaSlot(pos[0]-1, pos[1]))
+            computador[indice].walk("W");
+        else if(verificaSlot(pos[0]+1, pos[1]))
+            computador[indice].walk("S");
+        else if(verificaSlot(pos[0], pos[1]+1))
+            computador[indice].walk("D");
+        else if(verificaSlot(pos[0], pos[1]-1))
+            computador[indice].walk("A");
+        
+        for(int i=0; i<3; i++){
+            pos = player[i].getPosition();
+            if(player[i].isAlive())
+                this.tabuleiro.setCasa(pos[0], pos[1], 1, player[i].getFamily());
+        }
+        for(int i=0; i<3; i++){
+            pos = computador[i].getPosition();
+            if(computador[i].isAlive())
+                this.tabuleiro.setCasa(pos[0], pos[1], 2, computador[i].getFamily());
+        }
+        
+        this.tabuleiro.desenhaTabuleiro();
+    }
     public void turnoPlayer() {
         checaPersonagens(1);
         if(checaTime(player)){
@@ -334,6 +396,7 @@ public class Singleplayer{
                         input = "X";
                     }
                 }
+                case "C" -> {}
                 default -> input = "X";
                 }
             }while(input.equals("X"));
