@@ -241,7 +241,7 @@ public class Singleplayer{
         
         for(int i=0; i<3; i++)
             for(int j=0; j<3; j++){
-                if(computador[i].searchEnemy(player[j]))
+                if(computador[i].searchEnemy(player[j]) && computador[i].isAlive())
                 {
                     computador[i].attack(player[j]);
                     i=2;
@@ -249,17 +249,28 @@ public class Singleplayer{
                 }
             }
         Random random = new Random();
-        int indice = random.nextInt(0, 2);
+        int indice = 0;
+        do{
+            indice = random.nextInt(0, 2);
+        }while(!computador[indice].isAlive());
         int[] pos;
         pos = computador[indice].getPosition();
-        if(verificaSlot(pos[0]-1, pos[1]))
+        if(verificaSlot(pos[0]-1, pos[1])){
             computador[indice].walk("W");
-        else if(verificaSlot(pos[0]+1, pos[1]))
+            this.tabuleiro.limpaCasa(pos[0]+1, pos[1]);
+        }
+        else if(verificaSlot(pos[0]+1, pos[1])){
             computador[indice].walk("S");
-        else if(verificaSlot(pos[0], pos[1]+1))
+            this.tabuleiro.limpaCasa(pos[0]-1, pos[1]);
+        }
+        else if(verificaSlot(pos[0], pos[1]+1)){
             computador[indice].walk("D");
-        else if(verificaSlot(pos[0], pos[1]-1))
+            this.tabuleiro.limpaCasa(pos[0], pos[1]-1);
+        }
+        else if(verificaSlot(pos[0], pos[1]-1)){
             computador[indice].walk("A");
+            this.tabuleiro.limpaCasa(pos[0], pos[1]+1);
+        }
         
         for(int i=0; i<3; i++){
             pos = player[i].getPosition();
@@ -272,7 +283,6 @@ public class Singleplayer{
                 this.tabuleiro.setCasa(pos[0], pos[1], 2, computador[i].getFamily());
         }
         
-        this.tabuleiro.desenhaTabuleiro();
     }
     public void turnoPlayer() {
         checaPersonagens(1);
