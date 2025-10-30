@@ -130,16 +130,22 @@ public class Singleplayer extends Duelo {
         if (verificaSlot(pos[0] - 1, pos[1])) {
             player2[indice].walk("W");
             this.tabuleiro.limpaCasa(pos[0] + 1, pos[1]);
-        } else if (verificaSlot(pos[0] + 1, pos[1])) {
-            player2[indice].walk("S");
-            this.tabuleiro.limpaCasa(pos[0] - 1, pos[1]);
+        }  else if (verificaSlot(pos[0] - 1, pos[1]+1)) {
+            player2[indice].walk("WD");
+            this.tabuleiro.limpaCasa(pos[0] + 1, pos[1]-1);
+        }  else if (verificaSlot(pos[0]-1, pos[1]-1)) {
+            player2[indice].walk("WA");
+            this.tabuleiro.limpaCasa(pos[0] - 1, pos[1]+1);
         } else if (verificaSlot(pos[0], pos[1] + 1)) {
             player2[indice].walk("D");
             this.tabuleiro.limpaCasa(pos[0], pos[1] - 1);
         } else if (verificaSlot(pos[0], pos[1] - 1)) {
             player2[indice].walk("A");
             this.tabuleiro.limpaCasa(pos[0], pos[1] + 1);
-        }
+        }  else if (verificaSlot(pos[0] + 1, pos[1])) {
+            player2[indice].walk("S");
+            this.tabuleiro.limpaCasa(pos[0] - 1, pos[1]);
+        } 
 
         for (int i = 0; i < 3; i++) {
             pos = player1[i].getPosition();
@@ -155,17 +161,6 @@ public class Singleplayer extends Duelo {
         }
     }
     
-    private void printTeam(){
-        System.out.println("Equipe 1: ");
-        for (int i = 0; i < 3; i++) {
-            System.out.print(this.player1[i].getNome() + ": " + this.player1[i].getHp() + " | ");
-        }
-        System.out.println("");
-        System.out.println("Equipe 2: ");
-        for (int i = 0; i < 3; i++) {
-            System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp() + " | ");
-        }
-    }
     
     private boolean procuraInimigo(Personagem player, Personagem enemy[]){
         return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
@@ -196,6 +191,7 @@ public class Singleplayer extends Duelo {
         pos = this.player1[indice].getPosition();
 
         limpaTerminal();
+        printTeam();
         this.tabuleiro.desenhaTabuleiro();
         System.out.println("Jogador, selecione um personagem para mover\n");
         

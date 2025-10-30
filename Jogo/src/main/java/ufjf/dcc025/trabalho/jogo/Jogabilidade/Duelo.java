@@ -498,7 +498,7 @@ public class Duelo {
         limpaTerminal();
     }
 
-    private void printTeam(){
+    public void printTeam(){
         System.out.println("Equipe 1: ");
         for (int i = 0; i < 3; i++) {
             System.out.print(this.player1[i].getNome() + ": " + this.player1[i].getHp() + " | ");
@@ -508,6 +508,7 @@ public class Duelo {
         for (int i = 0; i < 3; i++) {
             System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp() + " | ");
         }
+        System.out.println("");
     }
     
     private boolean procuraInimigo(Personagem player, Personagem enemy[]){
