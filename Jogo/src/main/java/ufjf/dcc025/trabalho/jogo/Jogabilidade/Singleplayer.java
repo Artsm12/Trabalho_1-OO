@@ -278,8 +278,6 @@ public class Singleplayer extends Duelo {
                         input = "X";
                     }
                 }
-                case "C" -> {
-                }
                 default ->
                     input = "X";
             }
