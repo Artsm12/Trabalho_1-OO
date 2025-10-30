@@ -1,4 +1,5 @@
 package ufjf.dcc025.trabalho.jogo.Jogabilidade;
+
 import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
 import ufjf.dcc025.trabalho.jogo.Personagens.Personagem;
 
@@ -21,16 +22,15 @@ public class Singleplayer extends Duelo {
 
         for (int i = 0; i < 3; i++) {
             criaPersonagem(1, i);
-            limpaTerminal();
+            Tabuleiro.limpaTerminal();
             this.tabuleiro.desenhaTabuleiro();
         }
 
         for (int i = 0; i < 3; i++) {
-            criaPersonagemBot(i);
-            limpaTerminal();
+            criaPersonagem(2, i);
         }
 
-        limpaTerminal();
+        Tabuleiro.limpaTerminal();
         //System.exit(0);
         if (this.primeiroJogador == 1) {
             System.out.println("O jogador 1 comeca!\n");
@@ -54,25 +54,52 @@ public class Singleplayer extends Duelo {
     @Override
     public void criaPersonagem(int jogador, int indice) {
         Random random = new Random();
-        char family = selecaoDePersonagem(jogador);
+        if (jogador == 1) {
 
+            char family = selecaoDePersonagem(jogador);
+
+            int i, j;
+            do {
+                if (jogador == 1) {
+                    i = random.nextInt(2);
+                } else {
+                    i = random.nextInt(2) + 8;
+                }
+                j = random.nextInt(10);
+            } while (!this.tabuleiro.ehVazia(i, j));
+
+            System.out.println("\nEscolha um nome para seu personagem");
+            System.out.print("Nome: ");
+            String nome = teclado.nextLine();
+
+            this.player1[indice] = new Personagem(i, j, family, nome);
+            this.tabuleiro.setCasa(i, j, jogador, family);
+        }
+        else {
+            int famInd = random.nextInt(1, 4);
+        char family = 'S';
+        switch (famInd) {
+            case 1 ->
+                family = 'S';
+            case 2 ->
+                family = 'L';
+            case 3 ->
+                family = 'T';
+            default -> {
+            }
+        }
         int i, j;
         do {
-            if (jogador == 1) {
-                i = random.nextInt(2);
-            } else {
-                i = random.nextInt(2) + 8;
-            }
+            i = random.nextInt(2) + 8;
             j = random.nextInt(10);
         } while (!this.tabuleiro.ehVazia(i, j));
+        String nome = "COM" + indice;
 
-        System.out.println("\nEscolha um nome para seu personagem");
-        String nome = teclado.nextLine();
-
-        this.player1[indice] = new Personagem(i, j, family, nome);
-        this.tabuleiro.setCasa(i, j, jogador, family);
+        player2[indice] = new Personagem(i, j, family, nome);
+        this.tabuleiro.setCasa(i, j, 2, family);
+        }
     }
-
+/*
     public void criaPersonagemBot(int indice) {
         Random random = new Random();
         int famInd = random.nextInt(1, 4);
@@ -97,7 +124,7 @@ public class Singleplayer extends Duelo {
         player2[indice] = new Personagem(i, j, family, nome);
         this.tabuleiro.setCasa(i, j, 2, family);
     }
-
+*/
     public void turnoBot() {
         checaPersonagens(2);
         if (checaTime(1)) {
@@ -130,22 +157,22 @@ public class Singleplayer extends Duelo {
         if (verificaSlot(pos[0] - 1, pos[1])) {
             player2[indice].walk("W");
             this.tabuleiro.limpaCasa(pos[0] + 1, pos[1]);
-        }  else if (verificaSlot(pos[0] - 1, pos[1]+1)) {
+        } else if (verificaSlot(pos[0] - 1, pos[1] + 1)) {
             player2[indice].walk("WD");
-            this.tabuleiro.limpaCasa(pos[0] + 1, pos[1]-1);
-        }  else if (verificaSlot(pos[0]-1, pos[1]-1)) {
+            this.tabuleiro.limpaCasa(pos[0] + 1, pos[1] - 1);
+        } else if (verificaSlot(pos[0] - 1, pos[1] - 1)) {
             player2[indice].walk("WA");
-            this.tabuleiro.limpaCasa(pos[0] - 1, pos[1]+1);
+            this.tabuleiro.limpaCasa(pos[0] - 1, pos[1] + 1);
         } else if (verificaSlot(pos[0], pos[1] + 1)) {
             player2[indice].walk("D");
             this.tabuleiro.limpaCasa(pos[0], pos[1] - 1);
         } else if (verificaSlot(pos[0], pos[1] - 1)) {
             player2[indice].walk("A");
             this.tabuleiro.limpaCasa(pos[0], pos[1] + 1);
-        }  else if (verificaSlot(pos[0] + 1, pos[1])) {
+        } else if (verificaSlot(pos[0] + 1, pos[1])) {
             player2[indice].walk("S");
             this.tabuleiro.limpaCasa(pos[0] - 1, pos[1]);
-        } 
+        }
 
         for (int i = 0; i < 3; i++) {
             pos = player1[i].getPosition();
@@ -160,11 +187,10 @@ public class Singleplayer extends Duelo {
             }
         }
     }
-    
-    
-    private boolean procuraInimigo(Personagem player, Personagem enemy[]){
+
+    private boolean procuraInimigo(Personagem player, Personagem enemy[]) {
         return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
-}
+    }
 
     public void turnoPlayer() {
         checaPersonagens(1);
@@ -177,24 +203,22 @@ public class Singleplayer extends Duelo {
             return;
         }
 
-        
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
-
 
         int indice = escolhePersonagem(1);
 
         String input;
-        
+
         int pos[];
         this.tabuleiro.selecionaCasa(this.player1[indice].getPosition());
         pos = this.player1[indice].getPosition();
 
-        limpaTerminal();
+        Tabuleiro.limpaTerminal();
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
         System.out.println("Jogador, selecione um personagem para mover\n");
-        
+
         imprimeMenuDeMovimentacao(1, 0);
         do {
             input = teclado.nextLine().toUpperCase();
@@ -305,23 +329,22 @@ public class Singleplayer extends Duelo {
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
 
-        
         boolean temInimigo = false;
-        for(int i=0; i<3; i++){
-            if(procuraInimigo(player1[i], player2)){
+        for (int i = 0; i < 3; i++) {
+            if (procuraInimigo(player1[i], player2)) {
                 temInimigo = true;
                 break;
             }
         }
         int selec = 0;
-        
-        if(temInimigo){
+
+        if (temInimigo) {
             System.out.println("Escolha o personagem que vai atacar: ");
             selec = escolhePersonagem(1);
             atacar(player1[selec], player2);
         }
         System.out.println("");
-        limpaTerminal();
+        Tabuleiro.limpaTerminal();
     }
-    
+
 }

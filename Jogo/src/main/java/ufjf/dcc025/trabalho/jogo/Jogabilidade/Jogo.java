@@ -1,40 +1,55 @@
 package ufjf.dcc025.trabalho.jogo.Jogabilidade;
+import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
 
 import java.util.Scanner;
 import java.util.Random;
 
 public class Jogo {
-    private char modoDeJogo;
+    private int modoDeJogo;
 
-    public void menuDeInicio() {
-        System.out.println("Seja bem-vindo a Batalha Tatica das Casas de Westeros!");
+    public static void menuDeInicio() {
         System.out.println("Selecione uma opcao:\n");
-        System.out.println("(1) Solo (contra computador)");
-        System.out.println("(2) Duelo (2 jogadores)");
-        System.out.println("(Outro) Sair");
+        System.out.println("*------------------------------*");
+        System.out.println("| " + Tabuleiro.ANSI_YELLOW + "(1) Solo (contra computador)" + Tabuleiro.ANSI_RESET + " |");
+        System.out.println("| " + Tabuleiro.ANSI_GREEN + "(2) Duelo (2 jogadores)" + Tabuleiro.ANSI_RESET + "      |");
+        System.out.println("| " + Tabuleiro.ANSI_RED + "(S) Sair" + Tabuleiro.ANSI_RESET + "                     |");
+        System.out.println("*------------------------------*");
     }
     
     public void inicio() {
+        String input;
         Scanner teclado = new Scanner(System.in);
-        Duelo.limpaTerminal();
+        Tabuleiro.limpaTerminal();
+        System.out.println("Seja bem-vindo a Batalha Tatica das Casas de Westeros!");
         menuDeInicio();
         
-        this.modoDeJogo = teclado.next().charAt(0);
-        Duelo.limpaTerminal();
-        
-        if(this.modoDeJogo == '1') {
-            Singleplayer solo = new Singleplayer(coinFlip());
-            solo.inicio();
-        }
-        
-        else if(this.modoDeJogo == '2') {
-            Duelo duelo = new Duelo(coinFlip());
-            duelo.inicio();
-        }
-        else {
-            System.out.println("Obrigado por jogar :)");
-            System.exit(0);
-        }
+        do{
+            input = teclado.nextLine().toUpperCase();
+            
+            switch(input) {
+                case "1" -> {
+                    Tabuleiro.limpaTerminal();
+                    Singleplayer solo = new Singleplayer(coinFlip());
+                    solo.inicio();
+                    break;
+                }
+                case "2" -> {
+                    Tabuleiro.limpaTerminal();
+                    Duelo duelo = new Duelo(coinFlip());
+                    duelo.inicio();
+                    break;
+                }
+                case "S" -> {
+                    System.out.println("Obrigado por jogar :)");
+                    System.exit(0);
+                }
+                default -> {
+                    System.out.println("\nInput Invalido, tente novamente\n");
+                    menuDeInicio();
+                    break;
+                }
+            }
+        }while(!input.equals("1") || !input.equals("2") || !input.equals("S"));
     }
 
     public int coinFlip() {
