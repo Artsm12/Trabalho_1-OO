@@ -12,6 +12,7 @@ public class Personagem {
         this.family = family;
         setPosition(y, x);
         setFamily(this.family);
+        
     }
 
     public void setPosition(int y, int x) {

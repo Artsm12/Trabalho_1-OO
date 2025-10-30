@@ -198,11 +198,25 @@ public class Duelo {
                         indice -= 1;
                     
                     if(jogador == 1) {
+                        do {
+                            if(indice - 1 < 0)
+                                indice = 2;
+                            else
+                                indice -= 1;
+                        }while(!player1[indice].isAlive());
+                        
                         this.tabuleiro.selecionaCasa(player1[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
                         imprimeInformacoesDoPersonagem(1, indice);
                     }
                     else {
+                        do {
+                            if(indice - 1 < 0)
+                                indice = 2;
+                            else
+                                indice -= 1;
+                        }while(!player2[indice].isAlive());
+                        
                         this.tabuleiro.selecionaCasa(player2[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
                         imprimeInformacoesDoPersonagem(1, indice);
@@ -220,11 +234,25 @@ public class Duelo {
                         indice += 1;
                     
                     if(jogador == 1) {
+                        do {
+                            if(indice + 1 > 2)
+                                indice = 2;
+                            else
+                                indice += 1;
+                        }while(!player1[indice].isAlive());
+                       
                         this.tabuleiro.selecionaCasa(player1[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
                         imprimeInformacoesDoPersonagem(1, indice);
                     }
                     else {
+                        do {
+                            if(indice + 1 > 2)
+                                indice = 2;
+                            else
+                                indice += 1;
+                        }while(!player2[indice].isAlive());
+                        
                         this.tabuleiro.selecionaCasa(player2[indice].getPosition());
                         this.tabuleiro.desenhaTabuleiro();
                         imprimeInformacoesDoPersonagem(2, indice);
@@ -460,6 +488,7 @@ public class Duelo {
                 try {
                     // 3. Tenta ler um número inteiro
                     escolha = teclado.nextInt();
+                    teclado.nextLine();
                 
                     // 4. Se conseguiu ler, quebra o loop 
                     break;
