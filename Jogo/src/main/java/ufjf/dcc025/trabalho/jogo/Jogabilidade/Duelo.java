@@ -119,7 +119,6 @@ public class Duelo {
         System.out.println("| (A) Ir para a esquerda | (WD) Diagonal para cima e direita   |");
         System.out.println("| (S) Ir para baixo      | (SA) Diagonal para baixo e esquerda |");
         System.out.println("| (D) Ir para a direita  | (SD) Diagonal para baixo e direita  |");
-        System.out.println("| (P) Pular turno                                              |");
         System.out.println("*--------------------------------------------------------------*");
 
     }
@@ -200,10 +199,11 @@ public class Duelo {
 
     public int escolhePersonagem(int jogador) {
         int indice;
-        if(jogador == 1) 
-            for(indice = 0; !player1[indice].isAlive(); indice++);
-        else
-            for(indice = 0; !player2[indice].isAlive(); indice++);
+        if (jogador == 1) {
+            for (indice = 0; !player1[indice].isAlive(); indice++);
+        } else {
+            for (indice = 0; !player2[indice].isAlive(); indice++);
+        }
 
         if (jogador == 1) {
             this.tabuleiro.selecionaCasa(player1[indice].getPosition());
@@ -232,8 +232,9 @@ public class Duelo {
                         do {
                             if (indice - 1 < 0) {
                                 indice = 2;
-                                while(!player1[indice].isAlive())
+                                while (!player1[indice].isAlive()) {
                                     indice--;
+                                }
                             } else {
                                 indice -= 1;
                             }
@@ -244,13 +245,13 @@ public class Duelo {
                         this.tabuleiro.desenhaTabuleiro();
 
                         player1[indice].imprimeInformacoesDoPersonagem();
-                    } 
-                    else {
+                    } else {
                         do {
                             if (indice - 1 < 0) {
                                 indice = 2;
-                                while(!player2[indice].isAlive())
+                                while (!player2[indice].isAlive()) {
                                     indice--;
+                                }
                             } else {
                                 indice -= 1;
                             }
@@ -282,13 +283,13 @@ public class Duelo {
                         Tabuleiro.limpaTerminal();
                         this.tabuleiro.desenhaTabuleiro();
                         player1[indice].imprimeInformacoesDoPersonagem();
-                    } 
-                    else {
+                    } else {
                         do {
                             if (indice + 1 > 2) {
                                 indice = 0;
-                                while(!player2[indice].isAlive())
+                                while (!player2[indice].isAlive()) {
                                     indice++;
+                                }
                             } else {
                                 indice += 1;
                             }
@@ -478,11 +479,6 @@ public class Duelo {
                         input = "X";
                     }
                 }
-                case "P" -> {
-                    String mensagem = "O " + jogador + " pulou sua vez";
-                    this.replay.salvarEstadoDoJogo(this.tabuleiro, mensagem);
-                    return;
-                }
                 default -> {
                     Tabuleiro.limpaTerminal();
                     this.tabuleiro.desenhaTabuleiro();
@@ -517,33 +513,43 @@ public class Duelo {
         if (temInimigo) {
             Tabuleiro.limpaTerminal();
             System.out.println("Escolha o personagem que vai atacar: \n");
-            
+
             if (jogador == 1) {
-                do{
-                selec = escolhePersonagem(jogador);
-                
-                }while(atacar(player1[selec], player2)==1);
+                do {
+                    selec = escolhePersonagem(jogador);
+
+                } while (atacar(player1[selec], player2) == 1);
             } else {
-                do{
-                selec = escolhePersonagem(jogador);
-                }while(atacar(player2[selec], player1)==1);
+                do {
+                    selec = escolhePersonagem(jogador);
+                } while (atacar(player2[selec], player1) == 1);
             }
-        }
-        else
+        } else {
             this.replay.salvaEstadoDoJogo(tabuleiro, jogador);
+        }
 
         Tabuleiro.limpaTerminal();
     }
 
     public void printTeam() {
-        System.out.println("Equipe 1: ");
+        System.out.println(Tabuleiro.ANSI_CYAN + "Equipe 1: " + Tabuleiro.ANSI_RESET);
         for (int i = 0; i < 3; i++) {
-            System.out.print(this.player1[i].getNome() + ": " + this.player1[i].getHp() + " | ");
+            if (i != 2) {
+                System.out.print(this.player1[i].getNome() + ": " + this.player1[i].getHp() + " | ");
+            }
+            else {
+                System.out.print(this.player1[i].getNome() + ": " + this.player2[i].getHp());
+            }
         }
-        System.out.println("");
-        System.out.println("Equipe 2: ");
+        System.out.println("\n");
+        System.out.println(Tabuleiro.ANSI_RED + "Equipe 2: " + Tabuleiro.ANSI_RESET);
         for (int i = 0; i < 3; i++) {
-            System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp() + " | ");
+            if (i != 2) {
+                System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp() + " | ");
+            }
+            else {
+                System.out.print(this.player2[i].getNome() + ": " + this.player2[i].getHp());
+            }
         }
         System.out.println("");
     }
@@ -564,10 +570,16 @@ public class Duelo {
     }
 
     protected int atacar(Personagem player, Personagem[] enemy) {
-        if(!procuraInimigoAux(player, enemy)){
+        if (!procuraInimigoAux(player, enemy)) {
             System.out.println("Não haviam inimigos próximos, escolha outro personagem para atacar.");
-            return 1;}
+            return 1;
+        }
+        this.tabuleiro.desenhaTabuleiro();
+        System.out.println("");
+        printTeam();
+        System.out.println("");
         System.out.println("Selecione o alvo: ");
+        System.out.println("");
         int escolha = 0, j = 1;
         System.out.println("[0] Passar a vez");
         for (int i = 0; i < 3; i++) {
@@ -581,7 +593,7 @@ public class Duelo {
                 try {
                     // 3. Tenta ler um número inteiro
                     escolha = teclado.nextInt();
-                    while(escolha > 3) {
+                    while (escolha > 3) {
                         System.out.println("\nInput invalido, tente novamente\n");
                         escolha = teclado.nextInt();
                     }
@@ -605,15 +617,15 @@ public class Duelo {
         if (escolha != 0) {
             int hpAntiga = enemy[escolha - 1].getHp();
             player.attack(enemy[escolha - 1]);
-            this.replay.salvaEstadoDoJogo(this.tabuleiro, player, enemy[escolha-1], hpAntiga - enemy[escolha - 1].getHp());
-        } 
+            this.replay.salvaEstadoDoJogo(this.tabuleiro, player, enemy[escolha - 1], hpAntiga - enemy[escolha - 1].getHp());
+        }
         return 0;
     }
 
     protected boolean verificaSlot(int i, int j) {
         return (i >= 0 && i < 10 && j >= 0 && j < 10 && this.tabuleiro.ehVazia(i, j));
     }
-    
+
     public void assisteReplay() {
         this.replay.verReplay();
         return;

@@ -18,12 +18,11 @@ public class Singleplayer extends Duelo {
     @Override
     public void inicio() {
         this.tabuleiro = new Tabuleiro();
-        this.tabuleiro.desenhaTabuleiro();
 
         for (int i = 0; i < 3; i++) {
+            this.tabuleiro.desenhaTabuleiro();
             criaPersonagem(1, i);
             Tabuleiro.limpaTerminal();
-            this.tabuleiro.desenhaTabuleiro();
         }
 
         for (int i = 0; i < 3; i++) {
@@ -33,9 +32,9 @@ public class Singleplayer extends Duelo {
         Tabuleiro.limpaTerminal();
         //System.exit(0);
         if (this.primeiroJogador == 1) {
-            System.out.println("O jogador 1 comeca!\n");
+            System.out.println("O" + Tabuleiro.ANSI_CYAN + " jogador" + Tabuleiro.ANSI_RESET + " comeca!\n");
         } else {
-            System.out.println("O computador comeca!\n");
+            System.out.println("O" + Tabuleiro.ANSI_RED + " computador" + Tabuleiro.ANSI_RESET + " jogou!\n");
         }
 
         if (this.primeiroJogador == 1) {
@@ -178,6 +177,9 @@ public class Singleplayer extends Duelo {
     }
 
     public void turnoPlayer() {
+        if (acabou) {
+            return;
+        }
         checaPersonagens(1);
         if (checaTime(1)) {
             acabou = true;
@@ -188,9 +190,8 @@ public class Singleplayer extends Duelo {
             return;
         }
 
-        printTeam();
-        this.tabuleiro.desenhaTabuleiro();
-        System.out.println("Jogador, selecione um personagem para se movimentar\n");
+        System.out.println("");
+        System.out.println(Tabuleiro.ANSI_CYAN + "Jogador" + Tabuleiro.ANSI_RESET + ", selecione um personagem para se movimentar\n");
         int indice = escolhePersonagem(1);
 
         String input;
@@ -308,7 +309,6 @@ public class Singleplayer extends Duelo {
                 this.tabuleiro.setCasa(pos[0], pos[1], 2, player2[i].getFamily());
             }
         }
-        printTeam();
         this.tabuleiro.desenhaTabuleiro();
 
         boolean temInimigo = (procuraInimigo(player1, player2));
@@ -316,13 +316,13 @@ public class Singleplayer extends Duelo {
         int selec = 0;
 
         if (temInimigo) {
-            System.out.println("Escolha o personagem que vai atacar: ");
+            Tabuleiro.limpaTerminal();
+            System.out.println("Escolha o personagem que vai atacar: \n");
             do {
                 selec = escolhePersonagem(1);
 
             } while (atacar(player1[selec], player2) == 1);
-        }
-        else {
+        } else {
             this.replay.salvaEstadoDoJogo(tabuleiro, 1);
         }
         System.out.println("");

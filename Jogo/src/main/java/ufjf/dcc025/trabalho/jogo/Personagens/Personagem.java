@@ -1,6 +1,6 @@
 package ufjf.dcc025.trabalho.jogo.Personagens;
 
-import ufjf.dcc025.trabalho.jogo.Personagens.Lannister;
+import ufjf.dcc025.trabalho.jogo.TabuleiroUtils.Tabuleiro;
 
 public class Personagem {
 
@@ -172,16 +172,17 @@ public class Personagem {
             System.out.println("Targaryen");
         
         System.out.println("*------------------------------------------------*");
-        System.out.println("| HP: " + this.getHp() + "                                         |");
-        System.out.println("| ATK: " + this.atk + "                                        |");
-        System.out.println("| DEF: " + this.def + "                                        |");
+        System.out.println("| " + Tabuleiro.ANSI_GREEN + "HP: " + this.getHp() +Tabuleiro.ANSI_RESET + "                                         |");
+        System.out.println("|" + Tabuleiro.ANSI_RED + " ATK: " + this.atk + Tabuleiro.ANSI_RESET + "                                        |");
+        System.out.println("|" + Tabuleiro.ANSI_BLUE + " DEF: " + this.def + Tabuleiro.ANSI_RESET + "                                        |");
+        System.out.println("|" + Tabuleiro.ANSI_PURPLE + " Alcance: " + this.range + Tabuleiro.ANSI_RESET + "                                     |");
         
         if(this.family == 'S')
-            System.out.println("| Modificador: leva 20% menos dano               |");
+            System.out.println("|" + Tabuleiro.ANSI_YELLOW + " Modificador: leva 20% menos dano" + Tabuleiro.ANSI_RESET + "               |");
         else if(this.family == 'L')
-            System.out.println("| Modificador: causa 15% dano a mais             |");
+            System.out.println("|" + Tabuleiro.ANSI_YELLOW + " Modificador: causa 15% dano a mais" + Tabuleiro.ANSI_RESET + "             |");
         else
-            System.out.println("| Modificador: ignora a defesa base dos inimigos |");
+            System.out.println("|" + Tabuleiro.ANSI_YELLOW + " Modificador: ignora a defesa base dos inimigos" + Tabuleiro.ANSI_RESET + " |");
         
         System.out.println("*------------------------------------------------*");
     }
