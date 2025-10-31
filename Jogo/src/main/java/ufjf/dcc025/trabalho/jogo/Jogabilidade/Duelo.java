@@ -581,7 +581,7 @@ public class Duelo {
                 try {
                     // 3. Tenta ler um número inteiro
                     escolha = teclado.nextInt();
-                    while(escolha > 2) {
+                    while(escolha > 3) {
                         System.out.println("\nInput invalido, tente novamente\n");
                         escolha = teclado.nextInt();
                     }
