@@ -74,33 +74,32 @@ public class Singleplayer extends Duelo {
 
             this.player1[indice] = new Personagem(i, j, family, nome);
             this.tabuleiro.setCasa(i, j, jogador, family);
-        }
-        else {
+        } else {
             int famInd = random.nextInt(1, 4);
-        char family = 'S';
-        switch (famInd) {
-            case 1 ->
-                family = 'S';
-            case 2 ->
-                family = 'L';
-            case 3 ->
-                family = 'T';
-            default -> {
+            char family = 'S';
+            switch (famInd) {
+                case 1 ->
+                    family = 'S';
+                case 2 ->
+                    family = 'L';
+                case 3 ->
+                    family = 'T';
+                default -> {
+                }
             }
-        }
-        int i, j;
-        do {
-            i = random.nextInt(2) + 8;
-            j = random.nextInt(10);
-        } while (!this.tabuleiro.ehVazia(i, j));
-        String nome = "COM" + indice;
+            int i, j;
+            do {
+                i = random.nextInt(2) + 8;
+                j = random.nextInt(10);
+            } while (!this.tabuleiro.ehVazia(i, j));
+            String nome = "COM" + indice;
 
-        player2[indice] = new Personagem(i, j, family, nome);
-        this.tabuleiro.setCasa(i, j, 2, family);
+            player2[indice] = new Personagem(i, j, family, nome);
+            this.tabuleiro.setCasa(i, j, 2, family);
         }
     }
-    
-     public void turnoBot() {
+
+    public void turnoBot() {
         checaPersonagens(2);
         if (checaTime(1)) {
             acabou = true;
@@ -111,15 +110,24 @@ public class Singleplayer extends Duelo {
             return;
         }
 
+        int quemAtacou = 0, quemFoiAtacado = 0;
+        int hpAntiga = 0;
+
+        boolean bateu = false;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (player2[i].searchEnemy(player1[j]) && player2[i].isAlive()) {
+                    quemAtacou = i;
+                    quemFoiAtacado = j;
+                    hpAntiga = player1[j].getHp();
                     player2[i].attack(player1[j]);
                     i = 2;
+                    bateu = true;
                     break;
                 }
             }
         }
+
         Random random = new Random();
         int indice = 0;
         do {
@@ -161,6 +169,12 @@ public class Singleplayer extends Duelo {
                 this.tabuleiro.setCasa(pos[0], pos[1], 2, player2[i].getFamily());
             }
         }
+
+        if (!bateu) {
+            this.replay.salvaEstadoDoJogo(tabuleiro, 2);
+        } else {
+            this.replay.salvaEstadoDoJogo(tabuleiro, player2[quemAtacou], player1[quemFoiAtacado], hpAntiga - player1[quemFoiAtacado].getHp());
+        }
     }
 
     public void turnoPlayer() {
@@ -188,7 +202,6 @@ public class Singleplayer extends Duelo {
         Tabuleiro.limpaTerminal();
         printTeam();
         this.tabuleiro.desenhaTabuleiro();
-        
 
         imprimeMenuDeMovimentacao(1, 0);
         do {
@@ -299,18 +312,20 @@ public class Singleplayer extends Duelo {
         this.tabuleiro.desenhaTabuleiro();
 
         boolean temInimigo = (procuraInimigo(player1, player2));
-            
+
         int selec = 0;
 
         if (temInimigo) {
             System.out.println("Escolha o personagem que vai atacar: ");
-            do{
+            do {
                 selec = escolhePersonagem(1);
-                
-            }while(atacar(player1[selec], player2)==1);
+
+            } while (atacar(player1[selec], player2) == 1);
+        }
+        else {
+            this.replay.salvaEstadoDoJogo(tabuleiro, 1);
         }
         System.out.println("");
         Tabuleiro.limpaTerminal();
     }
-
 }

@@ -23,8 +23,16 @@ public class Tabuleiro {
         this.selecionada[1] = -1;
         
         for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 11; j++) {
+            for(int j = 0; j < 10; j++) {
                 casas[i][j] = new Casa();
+            }
+        }
+    }
+    
+    public void copia(Tabuleiro t) {
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                this.setCasa(i, j, t.getValorCasa(i, j), t.getFamilyCasa(i, j));
             }
         }
     }
@@ -93,9 +101,21 @@ public class Tabuleiro {
         this.casas[i][j].setValor(jogador);
     }
     
+    public int getValorCasa(int i, int j) {
+        return this.casas[i][j].getValor();
+    }
+    
+    public char getFamilyCasa(int i, int j) {
+        return this.casas[i][j].getFamily();
+    }
+    
     public void limpaCasa(int i, int j) {
         this.casas[i][j].setFamily(' ');
         this.casas[i][j].setValor(0);
+    }
+
+    public Casa[][] getCasas() {
+        return casas;
     }
     
     public void selecionaCasa(int i, int j) {
@@ -123,5 +143,9 @@ public class Tabuleiro {
     public static void limpaTerminal() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+    
+    public Casa getCasa(int i, int j) {
+        return this.casas[i][j];
     }
 }

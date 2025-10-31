@@ -11,6 +11,12 @@ public class Casa {
         this.family = ' ';
         this.selecionada = false;
     }
+    
+    public Casa(Casa c) {
+        this.valor = c.valor;
+        this.family = c.family;
+        this.selecionada = c.selecionada;
+    }
 
     public boolean estaVazia() {
         return this.valor == 0;

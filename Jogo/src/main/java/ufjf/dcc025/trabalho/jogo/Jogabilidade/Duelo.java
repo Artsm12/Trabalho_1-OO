@@ -8,11 +8,12 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Duelo extends Jogo{
+public class Duelo {
 
     protected Tabuleiro tabuleiro;
     protected Personagem[] player1;
     protected Personagem[] player2;
+    protected Replay replay;
     protected int primeiroJogador;
     protected boolean acabou;
 
@@ -61,42 +62,6 @@ public class Duelo extends Jogo{
                 turno(1);
             }
         }
-        
-    }
-
-    public void menuDeFimDeJogo() {
-        System.out.println("FIM DE JOGO");
-        if (checaTime(1)) {
-            System.out.println("O " + Tabuleiro.ANSI_CYAN + "jogador 1" + " venceu!!!");
-        } else {
-            System.out.println("O " + Tabuleiro.ANSI_RED + "jogador 2" + " venceu!!!");
-        }
-        String input;
-        
-        System.out.println("(E) Jogar novamente  |  (R) Ver replay");
-        System.out.println("(S) Sair");
-        
-        do {
-            input = teclado.nextLine().toUpperCase();
-            
-            switch(input) {
-                case "E" -> {
-                    
-                }
-                case "R" -> {
-                    this.replay.verReplay();
-                    break;
-                }
-                case "S" -> {
-                    System.out.println("Muito obrigado por jogar, esperamos que tenha gostado :)");
-                    System.exit(0);
-                }
-                default -> {
-                    System.out.println("Input invalido, tente novamente");
-                    break;
-                }
-            }
-        }while(!input.equals("E") || !input.equals("S") || !input.equals("R"));
     }
 
     public void criaPersonagem(int jogador, int indice) {
@@ -558,6 +523,8 @@ public class Duelo extends Jogo{
                 }while(atacar(player2[selec], player1)==1);
             }
         }
+        else
+            this.replay.salvaEstadoDoJogo(tabuleiro, jogador);
 
         Tabuleiro.limpaTerminal();
     }
@@ -626,17 +593,20 @@ public class Duelo extends Jogo{
             }
         } while (escolha < 0 && escolha > j);
 
-        if (escolha > 0) {
+        if (escolha != 0) {
             int hpAntiga = enemy[escolha - 1].getHp();
             player.attack(enemy[escolha - 1]);
             this.replay.salvaEstadoDoJogo(this.tabuleiro, player, enemy[escolha-1], hpAntiga - enemy[escolha - 1].getHp());
-        } else {
-            this.replay.salvaEstadoDoJogo(this.tabuleiro, player);
-        }
+        } 
         return 0;
     }
 
     protected boolean verificaSlot(int i, int j) {
         return (i >= 0 && i < 10 && j >= 0 && j < 10 && this.tabuleiro.ehVazia(i, j));
+    }
+    
+    public void assisteReplay() {
+        this.replay.verReplay();
+        return;
     }
 }
