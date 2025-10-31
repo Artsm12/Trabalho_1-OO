@@ -12,6 +12,11 @@ public class Replay {
     private List<Jogada> jogadas = new ArrayList<>();
     private Scanner teclado = new Scanner(System.in);
 
+    public void salvarEstadoDoJogo(Tabuleiro tabuleiro, String mensagem) {
+        Jogada jogada = new Jogada(tabuleiro, mensagem);
+        jogadas.add(jogada);
+    }
+
     public void salvaEstadoDoJogo(Tabuleiro tabuleiro, int jogador) {
         Jogada jogada = new Jogada(tabuleiro, jogador);
         jogadas.add(jogada);
@@ -32,17 +37,14 @@ public class Replay {
 
             input = teclado.nextLine().toUpperCase();
 
-            while(!input.equals("D") && !input.equals("S")) {
-                if(input.equals("D"))
-                    break;
-                else if(input.equals("S")) {
-                    return;
-                }
-                else {
-                    System.out.println("\nInput invalido, tente novamente\n");
-                    imprimeMenuDeReplay();
-                    input = teclado.nextLine().toUpperCase();
-                }
+            while (!input.equals("D") && !input.equals("S")) {
+                System.out.println("\nInput invalido, tente novamente\n");
+                imprimeMenuDeReplay();
+                input = teclado.nextLine().toUpperCase();
+            }
+            
+            if (input.equals("S")) {
+                return;
             }
 
             Tabuleiro.limpaTerminal();

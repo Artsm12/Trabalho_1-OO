@@ -119,6 +119,7 @@ public class Duelo {
         System.out.println("| (A) Ir para a esquerda | (WD) Diagonal para cima e direita   |");
         System.out.println("| (S) Ir para baixo      | (SA) Diagonal para baixo e esquerda |");
         System.out.println("| (D) Ir para a direita  | (SD) Diagonal para baixo e direita  |");
+        System.out.println("| (P) Pular turno                                              |");
         System.out.println("*--------------------------------------------------------------*");
 
     }
@@ -477,6 +478,11 @@ public class Duelo {
                         input = "X";
                     }
                 }
+                case "P" -> {
+                    String mensagem = "O " + jogador + " pulou sua vez";
+                    this.replay.salvarEstadoDoJogo(this.tabuleiro, mensagem);
+                    return;
+                }
                 default -> {
                     Tabuleiro.limpaTerminal();
                     this.tabuleiro.desenhaTabuleiro();
@@ -543,7 +549,7 @@ public class Duelo {
     }
 
     private boolean procuraInimigoAux(Personagem player, Personagem enemy[]) {
-        return (player.searchEnemy(enemy[0]) || player.searchEnemy(enemy[1]) || player.searchEnemy(enemy[2]));
+        return ((player.searchEnemy(enemy[0]) && enemy[0].isAlive()) || (player.searchEnemy(enemy[1]) && enemy[1].isAlive()) || (player.searchEnemy(enemy[2]) && enemy[2].isAlive()));
     }
 
     protected boolean procuraInimigo(Personagem player[], Personagem enemy[]) {

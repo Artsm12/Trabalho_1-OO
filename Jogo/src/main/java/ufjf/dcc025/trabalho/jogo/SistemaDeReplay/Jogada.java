@@ -8,6 +8,12 @@ public class Jogada {
     private Tabuleiro tabuleiro;
     private String ataque;
 
+    public Jogada(Tabuleiro t, String mensagem) {
+        this.tabuleiro = new Tabuleiro();
+        this.tabuleiro.copia(t);
+        this.ataque = mensagem;
+    }
+    
     public Jogada(Tabuleiro t, int jogador) {
         this.tabuleiro = new Tabuleiro();
         this.tabuleiro.copia(t);
